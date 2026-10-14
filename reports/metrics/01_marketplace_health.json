@@ -1,0 +1,388 @@
+{
+  "source": "real",
+  "months": [
+    "2024-01",
+    "2025-06"
+  ],
+  "n_months": 18,
+  "quality": {
+    "rows": 360465639,
+    "kept": 360033346,
+    "kept_pct": 99.88007372874728,
+    "valid_wait_pct": 99.00336564935849,
+    "per_million": {
+      "request_in_month": 120.7,
+      "valid_zones": 41.4,
+      "dropoff_after_pickup": 26.8,
+      "miles_positive": 221.8,
+      "duration_ok": 84.7,
+      "fare_positive": 527.2,
+      "pay_positive": 291.3,
+      "pickup_after_request": 9981.8,
+      "wait_under_2h": 1.2
+    }
+  },
+  "floor": {
+    "median_ratio": 1.0034945887506987,
+    "at_floor_pct": 53.162540401760374,
+    "below_floor_pct": 4.896125585427393,
+    "above_cap_pct": 13.410254776893654,
+    "premium_share_of_pay_pct": 7.881013465810817
+  },
+  "health_month": [
+    {
+      "month": "2024-01",
+      "trips_m": 19.645,
+      "trips_per_day": 633709.2258,
+      "wait_min": 4.289,
+      "pay_per_mile": 3.7787,
+      "pay_per_min": 0.9866,
+      "driver_share": 0.7624,
+      "tips_per_trip": 1.0578,
+      "cbd_fee_share": 0.0
+    },
+    {
+      "month": "2024-02",
+      "trips_m": 19.3389,
+      "trips_per_day": 666858.1379,
+      "wait_min": 4.3776,
+      "pay_per_mile": 3.8711,
+      "pay_per_min": 0.9931,
+      "driver_share": 0.7857,
+      "tips_per_trip": 1.0694,
+      "cbd_fee_share": 0.0
+    },
+    {
+      "month": "2024-03",
+      "trips_m": 21.267,
+      "trips_per_day": 686031.5484,
+      "wait_min": 4.6224,
+      "pay_per_mile": 3.9525,
+      "pay_per_min": 0.9949,
+      "driver_share": 0.7655,
+      "tips_per_trip": 1.1375,
+      "cbd_fee_share": 0.0
+    },
+    {
+      "month": "2024-04",
+      "trips_m": 19.7211,
+      "trips_per_day": 657369.6,
+      "wait_min": 4.6073,
+      "pay_per_mile": 3.9336,
+      "pay_per_min": 0.9985,
+      "driver_share": 0.7649,
+      "tips_per_trip": 1.176,
+      "cbd_fee_share": 0.0
+    },
+    {
+      "month": "2024-05",
+      "trips_m": 20.6922,
+      "trips_per_day": 667490.5484,
+      "wait_min": 4.614,
+      "pay_per_mile": 4.0483,
+      "pay_per_min": 0.9888,
+      "driver_share": 0.7663,
+      "tips_per_trip": 1.2539,
+      "cbd_fee_share": 0.0
+    },
+    {
+      "month": "2024-06",
+      "trips_m": 20.1082,
+      "trips_per_day": 670274.9,
+      "wait_min": 4.8616,
+      "pay_per_mile": 4.0091,
+      "pay_per_min": 1.0018,
+      "driver_share": 0.7675,
+      "tips_per_trip": 1.2173,
+      "cbd_fee_share": 0.0
+    },
+    {
+      "month": "2024-07",
+      "trips_m": 19.1695,
+      "trips_per_day": 618370.4839,
+      "wait_min": 4.497,
+      "pay_per_mile": 3.8416,
+      "pay_per_min": 1.0038,
+      "driver_share": 0.7706,
+      "tips_per_trip": 1.1309,
+      "cbd_fee_share": 0.0
+    },
+    {
+      "month": "2024-08",
+      "trips_m": 19.1154,
+      "trips_per_day": 616625.0645,
+      "wait_min": 4.555,
+      "pay_per_mile": 3.8656,
+      "pay_per_min": 1.0076,
+      "driver_share": 0.7659,
+      "tips_per_trip": 1.1113,
+      "cbd_fee_share": 0.0
+    },
+    {
+      "month": "2024-09",
+      "trips_m": 19.1939,
+      "trips_per_day": 639797.2,
+      "wait_min": 4.8958,
+      "pay_per_mile": 4.0763,
+      "pay_per_min": 0.995,
+      "driver_share": 0.7739,
+      "tips_per_trip": 1.198,
+      "cbd_fee_share": 0.0
+    },
+    {
+      "month": "2024-10",
+      "trips_m": 19.9995,
+      "trips_per_day": 645144.4839,
+      "wait_min": 4.6203,
+      "pay_per_mile": 4.0274,
+      "pay_per_min": 1.0023,
+      "driver_share": 0.7724,
+      "tips_per_trip": 1.2503,
+      "cbd_fee_share": 0.0
+    },
+    {
+      "month": "2024-11",
+      "trips_m": 19.9614,
+      "trips_per_day": 665380.4667,
+      "wait_min": 4.7193,
+      "pay_per_mile": 4.0728,
+      "pay_per_min": 1.0141,
+      "driver_share": 0.7807,
+      "tips_per_trip": 1.1712,
+      "cbd_fee_share": 0.0
+    },
+    {
+      "month": "2024-12",
+      "trips_m": 21.0192,
+      "trips_per_day": 678039.7097,
+      "wait_min": 5.3357,
+      "pay_per_mile": 4.2254,
+      "pay_per_min": 1.0464,
+      "driver_share": 0.7705,
+      "tips_per_trip": 1.2862,
+      "cbd_fee_share": 0.0
+    },
+    {
+      "month": "2025-01",
+      "trips_m": 20.3773,
+      "trips_per_day": 657333.5484,
+      "wait_min": 4.5881,
+      "pay_per_mile": 3.8483,
+      "pay_per_min": 1.0228,
+      "driver_share": 0.7682,
+      "tips_per_trip": 1.0412,
+      "cbd_fee_share": 0.3091
+    },
+    {
+      "month": "2025-02",
+      "trips_m": 19.3242,
+      "trips_per_day": 690149.5,
+      "wait_min": 4.735,
+      "pay_per_mile": 3.9037,
+      "pay_per_min": 1.0149,
+      "driver_share": 0.7659,
+      "tips_per_trip": 1.0174,
+      "cbd_fee_share": 0.353
+    },
+    {
+      "month": "2025-03",
+      "trips_m": 20.4592,
+      "trips_per_day": 659972.7419,
+      "wait_min": 4.8254,
+      "pay_per_mile": 4.0565,
+      "pay_per_min": 1.0604,
+      "driver_share": 0.7358,
+      "tips_per_trip": 1.1177,
+      "cbd_fee_share": 0.3435
+    },
+    {
+      "month": "2025-04",
+      "trips_m": 19.7278,
+      "trips_per_day": 657593.0667,
+      "wait_min": 4.5483,
+      "pay_per_mile": 4.048,
+      "pay_per_min": 1.0357,
+      "driver_share": 0.7668,
+      "tips_per_trip": 1.1278,
+      "cbd_fee_share": 0.3511
+    },
+    {
+      "month": "2025-05",
+      "trips_m": 21.0759,
+      "trips_per_day": 679868.6774,
+      "wait_min": 5.0748,
+      "pay_per_mile": 4.2595,
+      "pay_per_min": 1.0455,
+      "driver_share": 0.7724,
+      "tips_per_trip": 1.2397,
+      "cbd_fee_share": 0.3434
+    },
+    {
+      "month": "2025-06",
+      "trips_m": 19.8376,
+      "trips_per_day": 661255.0,
+      "wait_min": 5.1836,
+      "pay_per_mile": 4.2233,
+      "pay_per_min": 1.0629,
+      "driver_share": 0.7716,
+      "tips_per_trip": 1.2352,
+      "cbd_fee_share": 0.3372
+    }
+  ],
+  "weekly": {
+    "corr_trips_wait": -0.1454404264738461,
+    "peak_wait_min": 6.103204685601304,
+    "peak_wait_dow": 6,
+    "peak_wait_hod": 4,
+    "min_wait_min": 3.936297199166719
+  },
+  "borough": [
+    {
+      "borough": "Manhattan",
+      "trips_m": 138.1617,
+      "wait_min": 4.4776,
+      "pm_peak_wait_min": 4.641,
+      "pay_per_mile": 4.2627,
+      "driver_share": 0.7162
+    },
+    {
+      "borough": "Brooklyn",
+      "trips_m": 95.497,
+      "wait_min": 4.725,
+      "pm_peak_wait_min": 4.4965,
+      "pay_per_mile": 4.2589,
+      "driver_share": 0.803
+    },
+    {
+      "borough": "Queens",
+      "trips_m": 75.9006,
+      "wait_min": 4.9962,
+      "pm_peak_wait_min": 4.7833,
+      "pay_per_mile": 3.5442,
+      "driver_share": 0.7979
+    },
+    {
+      "borough": "Bronx",
+      "trips_m": 45.0818,
+      "wait_min": 4.8837,
+      "pm_peak_wait_min": 4.8035,
+      "pay_per_mile": 3.8096,
+      "driver_share": 0.8475
+    },
+    {
+      "borough": "Staten Island",
+      "trips_m": 5.3922,
+      "wait_min": 5.7864,
+      "pm_peak_wait_min": 5.3608,
+      "pay_per_mile": 3.4051,
+      "driver_share": 0.8207
+    },
+    {
+      "borough": "EWR",
+      "trips_m": 0.0,
+      "wait_min": 37.7911,
+      "pm_peak_wait_min": null,
+      "pay_per_mile": 22.5527,
+      "driver_share": 0.738
+    }
+  ],
+  "clusters": {
+    "k": 3,
+    "choose_k": [
+      {
+        "k": 3,
+        "silhouette": 0.262,
+        "stability_ari": 0.846,
+        "smallest_cluster": 19
+      },
+      {
+        "k": 4,
+        "silhouette": 0.19,
+        "stability_ari": 0.693,
+        "smallest_cluster": 16
+      },
+      {
+        "k": 5,
+        "silhouette": 0.197,
+        "stability_ari": 0.702,
+        "smallest_cluster": 16
+      },
+      {
+        "k": 6,
+        "silhouette": 0.208,
+        "stability_ari": 0.733,
+        "smallest_cluster": 7
+      },
+      {
+        "k": 7,
+        "silhouette": 0.175,
+        "stability_ari": 0.548,
+        "smallest_cluster": 4
+      },
+      {
+        "k": 8,
+        "silhouette": 0.175,
+        "stability_ari": 0.521,
+        "smallest_cluster": 7
+      }
+    ],
+    "profile": [
+      {
+        "cluster": 0,
+        "name": "Core",
+        "zones": 78,
+        "trips_per_day": 328690.0914,
+        "share_night": 0.1243,
+        "share_am_peak": 0.1408,
+        "share_pm_peak": 0.2336,
+        "share_evening": 0.2287,
+        "share_weekend": 0.3293,
+        "wait_min": 4.4946,
+        "wait_tail": 1.6536,
+        "miles_per_trip": 4.8062,
+        "pay_per_mile": 4.279,
+        "airport_share": 0.0609,
+        "arrivals_per_pickup": 0.9358,
+        "trip_share_pct": 49.9377
+      },
+      {
+        "cluster": 1,
+        "name": "Long waits",
+        "zones": 19,
+        "trips_per_day": 3422.0733,
+        "share_night": 0.0904,
+        "share_am_peak": 0.1126,
+        "share_pm_peak": 0.2786,
+        "share_evening": 0.1902,
+        "share_weekend": 0.3678,
+        "wait_min": 6.5323,
+        "wait_tail": 1.6712,
+        "miles_per_trip": 5.7697,
+        "pay_per_mile": 3.5787,
+        "airport_share": 0.0287,
+        "arrivals_per_pickup": 1.1579,
+        "trip_share_pct": 0.5199
+      },
+      {
+        "cluster": 2,
+        "name": "Commuter residential",
+        "zones": 157,
+        "trips_per_day": 301278.1499,
+        "share_night": 0.1093,
+        "share_am_peak": 0.2154,
+        "share_pm_peak": 0.2132,
+        "share_evening": 0.1654,
+        "share_weekend": 0.2872,
+        "wait_min": 4.7564,
+        "wait_tail": 1.6263,
+        "miles_per_trip": 4.6226,
+        "pay_per_mile": 3.7552,
+        "airport_share": 0.0275,
+        "arrivals_per_pickup": 0.9554,
+        "trip_share_pct": 45.773
+      }
+    ],
+    "n_sparse_zones": 6
+  },
+  "days": 547
+}

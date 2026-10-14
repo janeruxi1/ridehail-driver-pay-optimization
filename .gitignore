@@ -1,0 +1,19 @@
+# NYC TLC trip records: downloaded by scripts/build_tables.py, never committed
+data/raw/
+data/interim/
+data/sample/
+__pycache__/
+.ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/
+spark-warehouse/
+metastore_db/
+derby.log
+*.egg-info/
+.venv/
+.vscode/
+reports/prep/
+data/synthetic/
+
+# Earlier, superseded plan (kept locally, not published)
+archive/

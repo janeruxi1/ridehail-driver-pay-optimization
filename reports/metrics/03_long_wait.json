@@ -1,0 +1,117 @@
+{
+  "source": "real",
+  "threshold_min": 10,
+  "n_trips": 1787098,
+  "long_wait_rate": 0.05443797710030451,
+  "split": {
+    "train": [
+      "2024-01",
+      "2025-03"
+    ],
+    "valid": "2025-04",
+    "test": [
+      "2025-05",
+      "2025-06"
+    ]
+  },
+  "metrics": {
+    "Logistic": {
+      "ROC AUC": 0.71701,
+      "PR AUC": 0.18688,
+      "Brier": 0.0643,
+      "log loss": 0.2414
+    },
+    "LightGBM": {
+      "ROC AUC": 0.73486,
+      "PR AUC": 0.19601,
+      "Brier": 0.06365,
+      "log loss": 0.23676
+    },
+    "Base rate only": {
+      "ROC AUC": 0.5,
+      "PR AUC": 0.07344,
+      "Brier": 0.0685,
+      "log loss": 0.26651
+    }
+  },
+  "max_decile_calibration_gap": 0.013377617734935093,
+  "costs": {
+    "flag": 1.0,
+    "miss": 8.0
+  },
+  "hindsight_threshold": 0.12,
+  "decision_threshold": 0.1111111111111111,
+  "policy_cost": {
+    "Do nothing": 0.5875,
+    "Flag every request": 1.0,
+    "Model, threshold 0.111 (fixed in advance)": 0.4942,
+    "Model, best threshold in hindsight (0.12)": 0.49419
+  },
+  "precision": 0.2006974660865114,
+  "recall": 0.4210632299637535,
+  "flagged_share": 0.15407138667205608,
+  "sensitivity": [
+    {
+      "cost of a long wait": 4,
+      "best threshold": 0.28
+    },
+    {
+      "cost of a long wait": 8,
+      "best threshold": 0.12
+    },
+    {
+      "cost of a long wait": 16,
+      "best threshold": 0.06
+    }
+  ],
+  "feature_importance": {
+    "prev_wait_p90_min": 0.313,
+    "zone": 0.221,
+    "prev_wait_min": 0.191,
+    "shared_request": 0.072,
+    "hod": 0.053,
+    "prev_city_trips": 0.033,
+    "platform": 0.027,
+    "trip_miles": 0.025,
+    "prev_city_wait_min": 0.021,
+    "prev_trips": 0.017
+  },
+  "trees": 230,
+  "by_cluster": [
+    {
+      "cluster_name": "Airports",
+      "trips": 8062,
+      "long_wait_rate": 0.19338,
+      "mean_pred": 0.18721,
+      "flagged": 0.60258
+    },
+    {
+      "cluster_name": "Commuter residential",
+      "trips": 94680,
+      "long_wait_rate": 0.0711,
+      "mean_pred": 0.06483,
+      "flagged": 0.12833
+    },
+    {
+      "cluster_name": "Core",
+      "trips": 98879,
+      "long_wait_rate": 0.06439,
+      "mean_pred": 0.06237,
+      "flagged": 0.13755
+    },
+    {
+      "cluster_name": "Long waits",
+      "trips": 1244,
+      "long_wait_rate": 0.19212,
+      "mean_pred": 0.17535,
+      "flagged": 0.5201
+    },
+    {
+      "cluster_name": "Sparse",
+      "trips": 2,
+      "long_wait_rate": 0.5,
+      "mean_pred": 0.0871,
+      "flagged": 0.0
+    }
+  ]
+}

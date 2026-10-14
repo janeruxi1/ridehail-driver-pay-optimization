@@ -1,0 +1,11 @@
+data/
+notebooks/
+reports/
+archive/
+tests/
+.git/
+.github/
+**/__pycache__/
+**/*.pyc
+.venv/
+spark-warehouse/

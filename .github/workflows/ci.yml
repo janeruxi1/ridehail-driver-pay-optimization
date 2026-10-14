@@ -1,0 +1,76 @@
+name: CI
+
+# Runs on every pull request and push. Nothing here downloads the TLC data: the notebooks run on a
+# small synthetic city in the same schema (scripts/make_synthetic.py), and refuse to write results
+# from it into reports/.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - uses: actions/setup-java@v4          # PySpark tests need a JVM
+        with:
+          distribution: temurin
+          java-version: "17"
+      - run: pip install -e ".[all]"
+      - name: Lint
+        run: ruff check src scripts tests notebooks
+      - name: Unit tests (cleaning rules, estimators, optimizer, simulator, API)
+        run: pytest -q
+      - name: Notebooks match their .py sources
+        run: python scripts/build_notebooks.py --check
+
+  notebooks-synthetic:
+    runs-on: ubuntu-latest
+    needs: lint-test
+    env:
+      RIDEPAY_SYNTHETIC: "1"
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e ".[api,data,models,dev]"
+      - run: python scripts/make_synthetic.py
+      - name: Run every phase end to end on the synthetic city
+        working-directory: notebooks
+        run: |
+          for nb in 0*.py; do
+            echo "::group::$nb"
+            python "$nb"
+            echo "::endgroup::"
+          done
+      - name: Export the quote model from the synthetic run
+        run: python scripts/export_model.py
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: lint-test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the quote service image
+        run: docker build -t ridepay-quote:ci .
+      - name: Smoke test the container
+        run: |
+          docker run -d --name quote -p 8000:8000 ridepay-quote:ci
+          for i in $(seq 1 30); do curl -sf localhost:8000/health && break; sleep 1; done
+          curl -sf -X POST localhost:8000/quote -H 'content-type: application/json' \
+            -d '{"pickup_zone": 61, "dropoff_zone": 17, "request_time": "2025-06-10T08:15:00",
+                 "trip_miles": 2.4, "trip_minutes": 14, "rider_fare": 18.5}' | tee quote.json
+          python3 -c "import json; q = json.load(open('quote.json')); assert q['recommended_pay'] >= q['floor_pay']"
+          docker logs quote

@@ -1,0 +1,149 @@
+{
+  "source": "real",
+  "test_origins": [
+    "2025-03-10",
+    "2025-04-07",
+    "2025-05-05",
+    "2025-06-02"
+  ],
+  "valid_origin": "2025-02-10",
+  "params": {
+    "num_leaves": 31,
+    "learning_rate": 0.1,
+    "min_data_in_leaf": 200
+  },
+  "trees": 92,
+  "tuning": [
+    {
+      "num_leaves": 31,
+      "learning_rate": 0.1,
+      "min_data_in_leaf": 200,
+      "trees": 92,
+      "valid_wmape": 0.12573684257820236,
+      "seconds": 13
+    },
+    {
+      "num_leaves": 127,
+      "learning_rate": 0.1,
+      "min_data_in_leaf": 200,
+      "trees": 81,
+      "valid_wmape": 0.130890400914247,
+      "seconds": 16
+    },
+    {
+      "num_leaves": 63,
+      "learning_rate": 0.05,
+      "min_data_in_leaf": 500,
+      "trees": 177,
+      "valid_wmape": 0.12772859561185917,
+      "seconds": 24
+    },
+    {
+      "num_leaves": 255,
+      "learning_rate": 0.05,
+      "min_data_in_leaf": 500,
+      "trees": 169,
+      "valid_wmape": 0.13032019953790144,
+      "seconds": 36
+    }
+  ],
+  "wmape_levels": {
+    "LightGBM": {
+      "zone \u00d7 hour": 0.1274,
+      "zone \u00d7 day": 0.06704,
+      "cluster \u00d7 hour": 0.0667,
+      "city \u00d7 hour": 0.05688
+    },
+    "Seasonal naive (last week)": {
+      "zone \u00d7 hour": 0.16365,
+      "zone \u00d7 day": 0.07839,
+      "cluster \u00d7 hour": 0.08608,
+      "city \u00d7 hour": 0.07214
+    },
+    "4-week mean": {
+      "zone \u00d7 hour": 0.13379,
+      "zone \u00d7 day": 0.07006,
+      "cluster \u00d7 hour": 0.07193,
+      "city \u00d7 hour": 0.06212
+    }
+  },
+  "bias": {
+    "LightGBM": 0.003498687161857231,
+    "Seasonal naive (last week)": 0.0003629415730269649,
+    "4-week mean": 0.008598713305988676
+  },
+  "by_week": {
+    "LightGBM": {
+      "1": 0.12247,
+      "2": 0.12779,
+      "3": 0.13366,
+      "4": 0.12585
+    },
+    "Seasonal naive (last week)": {
+      "1": 0.15532,
+      "2": 0.16271,
+      "3": 0.16968,
+      "4": 0.16706
+    },
+    "4-week mean": {
+      "1": 0.12602,
+      "2": 0.13292,
+      "3": 0.14222,
+      "4": 0.1342
+    }
+  },
+  "by_cluster": {
+    "LightGBM": {
+      "Core": 0.12297,
+      "Long waits": 0.45539,
+      "Commuter residential": 0.12437,
+      "Airports": 0.17228
+    },
+    "Seasonal naive (last week)": {
+      "Core": 0.16036,
+      "Long waits": 0.50141,
+      "Commuter residential": 0.15925,
+      "Airports": 0.20897
+    },
+    "trips_share": {
+      "Core": 0.48934,
+      "Long waits": 0.00559,
+      "Commuter residential": 0.46608,
+      "Airports": 0.03898
+    }
+  },
+  "holidays": [
+    {
+      "date": "2025-05-26",
+      "y": 519951.0,
+      "model_err": 0.0215,
+      "naive_err": 0.09399999678134918
+    },
+    {
+      "date": "2025-06-19",
+      "y": 665929.0,
+      "model_err": -0.0524,
+      "naive_err": -0.005100000184029341
+    }
+  ],
+  "feature_importance": {
+    "prof4": 0.979,
+    "last1": 0.012,
+    "year_ago": 0.003,
+    "zone": 0.002,
+    "month": 0.001,
+    "hod": 0.001,
+    "how": 0.001,
+    "holiday": 0.001,
+    "zone_week_trips": 0.0,
+    "day_after_holiday": 0.0,
+    "level_ratio": 0.0,
+    "horizon_h": 0.0,
+    "day_before_holiday": 0.0,
+    "dow": 0.0,
+    "cluster": 0.0
+  },
+  "improvement_vs_naive_zone_hour": 0.2214692693112924,
+  "improvement_vs_4wk_mean_zone_hour": 0.04772303558127022,
+  "poisson_noise_floor_zone_hour": 0.06801657595524256
+}

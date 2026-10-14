@@ -1,0 +1,53 @@
+{
+  "source": "real",
+  "regions": 12,
+  "weeks": 4,
+  "expected_effect": 0.16304999999999836,
+  "design": [
+    {
+      "block_h": 1,
+      "washout": false,
+      "sd_randomization": 0.04596,
+      "aa_false_positive_cluster_se": 0.06667,
+      "bias_share": -0.32399,
+      "mde_4wk": 0.19036,
+      "weeks_for_expected": 6
+    },
+    {
+      "block_h": 2,
+      "washout": false,
+      "sd_randomization": 0.06046,
+      "aa_false_positive_cluster_se": 0.08667,
+      "bias_share": -0.13659,
+      "mde_4wk": 0.19605,
+      "weeks_for_expected": 6
+    },
+    {
+      "block_h": 2,
+      "washout": true,
+      "sd_randomization": 0.07947,
+      "aa_false_positive_cluster_se": 0.13333,
+      "bias_share": 0.01277,
+      "mde_4wk": 0.2197,
+      "weeks_for_expected": 8
+    },
+    {
+      "block_h": 4,
+      "washout": true,
+      "sd_randomization": 0.0783,
+      "aa_false_positive_cluster_se": 0.1,
+      "bias_share": -0.06537,
+      "mde_4wk": 0.23459,
+      "weeks_for_expected": 9
+    }
+  ],
+  "chosen": {
+    "block_h": 2,
+    "washout": true
+  },
+  "wait_mde_min": 0.10012336410354201,
+  "replications": {
+    "aa": 150,
+    "effect": 40
+  }
+}

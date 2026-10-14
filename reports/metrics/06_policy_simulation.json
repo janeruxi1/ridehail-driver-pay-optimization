@@ -1,0 +1,1429 @@
+{
+  "source": "real",
+  "fit_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03"
+  ],
+  "held_months": [
+    "2025-04",
+    "2025-05",
+    "2025-06"
+  ],
+  "cells": 98,
+  "premium_options": [
+    0.0,
+    0.025,
+    0.05,
+    0.075,
+    0.1,
+    0.125,
+    0.15,
+    0.175,
+    0.2,
+    0.225,
+    0.25,
+    0.275,
+    0.3
+  ],
+  "assumptions": {
+    "reoffer_sec": 20.0,
+    "cancel_per_decline": 0.06,
+    "cancel_cost": 5.0,
+    "earnings_floor": 0.95
+  },
+  "fit_summary": {
+    "Today": {
+      "margin_per_request": 5.70434,
+      "first_offer_acceptance": 0.7139,
+      "completion": 0.97424,
+      "extra_wait_sec": 7.98204,
+      "pay_per_trip": 19.58422,
+      "earnings_per_hour": 51.75971
+    },
+    "Floor only": {
+      "margin_per_request": 7.04065,
+      "first_offer_acceptance": 0.65575,
+      "completion": 0.96688,
+      "extra_wait_sec": 10.2641,
+      "pay_per_trip": 18.09712,
+      "earnings_per_hour": 47.76465
+    },
+    "Optimized (point)": {
+      "margin_per_request": 5.98119,
+      "first_offer_acceptance": 0.7139,
+      "completion": 0.97555,
+      "extra_wait_sec": 7.61451,
+      "pay_per_trip": 19.29678,
+      "earnings_per_hour": 50.98144
+    },
+    "Optimized (robust)": {
+      "margin_per_request": 5.96128,
+      "first_offer_acceptance": 0.71462,
+      "completion": 0.97564,
+      "extra_wait_sec": 7.58783,
+      "pay_per_trip": 19.32027,
+      "earnings_per_hour": 51.04124
+    }
+  },
+  "held_summary": {
+    "Today": {
+      "margin_per_request": 5.76283,
+      "first_offer_acceptance": 0.70611,
+      "completion": 0.97328,
+      "extra_wait_sec": 8.28266,
+      "pay_per_trip": 21.48097,
+      "earnings_per_hour": 53.19368,
+      "C3_wait": null,
+      "C4_acceptance": null,
+      "C5_earnings": null,
+      "margin_vs_today_pct": 0.0
+    },
+    "Floor only": {
+      "margin_per_request": 7.30039,
+      "first_offer_acceptance": 0.64812,
+      "completion": 0.96587,
+      "extra_wait_sec": 10.58105,
+      "pay_per_trip": 19.76984,
+      "earnings_per_hour": 48.9008,
+      "C3_wait": false,
+      "C4_acceptance": false,
+      "C5_earnings": false,
+      "margin_vs_today_pct": 26.68068
+    },
+    "Optimized (point)": {
+      "margin_per_request": 5.94385,
+      "first_offer_acceptance": 0.71189,
+      "completion": 0.97538,
+      "extra_wait_sec": 7.67185,
+      "pay_per_trip": 21.29311,
+      "earnings_per_hour": 52.71316,
+      "C3_wait": true,
+      "C4_acceptance": true,
+      "C5_earnings": true,
+      "margin_vs_today_pct": 3.14125
+    },
+    "Optimized (robust)": {
+      "margin_per_request": 5.92244,
+      "first_offer_acceptance": 0.71214,
+      "completion": 0.97541,
+      "extra_wait_sec": 7.66456,
+      "pay_per_trip": 21.31792,
+      "earnings_per_hour": 52.77188,
+      "C3_wait": true,
+      "C4_acceptance": true,
+      "C5_earnings": true,
+      "margin_vs_today_pct": 2.76971
+    }
+  },
+  "by_borough": [
+    {
+      "borough": "Bronx",
+      "trips": 38722,
+      "margin today": 2.3097,
+      "margin policy": 1.8912,
+      "pay per trip today": 17.67219,
+      "pay per trip policy": 18.13226,
+      "acceptance today": 0.69371,
+      "acceptance policy": 0.71381,
+      "margin change": -0.4185
+    },
+    {
+      "borough": "Brooklyn",
+      "trips": 81850,
+      "margin today": 3.80449,
+      "margin policy": 3.62589,
+      "pay per trip today": 18.94269,
+      "pay per trip policy": 19.14335,
+      "acceptance today": 0.70137,
+      "acceptance policy": 0.71693,
+      "margin change": -0.1786
+    },
+    {
+      "borough": "Manhattan",
+      "trips": 112480,
+      "margin today": 8.92428,
+      "margin policy": 9.73779,
+      "pay per trip today": 23.24899,
+      "pay per trip policy": 22.41056,
+      "acceptance today": 0.73821,
+      "acceptance policy": 0.72592,
+      "margin change": 0.81351
+    },
+    {
+      "borough": "Queens",
+      "trips": 66386,
+      "margin today": 5.02256,
+      "margin policy": 4.92045,
+      "pay per trip today": 24.03374,
+      "pay per trip policy": 24.11509,
+      "acceptance today": 0.66812,
+      "acceptance policy": 0.68262,
+      "margin change": -0.10211
+    },
+    {
+      "borough": "Staten Island",
+      "trips": 4751,
+      "margin today": 3.14141,
+      "margin policy": 2.01566,
+      "pay per trip today": 18.75745,
+      "pay per trip policy": 20.00845,
+      "acceptance today": 0.65986,
+      "acceptance policy": 0.7025,
+      "margin change": -1.12574
+    }
+  ],
+  "stability": {
+    "same_as_robust_share": 0.5224489795918368,
+    "within_5pts_share": 0.8979591836734694,
+    "mean_abs_diff_pts": 2.160714285714285
+  },
+  "guardrails_in_draws": {
+    "point": {
+      "C3_wait": 0.2,
+      "C4_acceptance": 0.5,
+      "C5_earnings": 1.0
+    },
+    "robust": {
+      "C3_wait": 1.0,
+      "C4_acceptance": 1.0,
+      "C5_earnings": 1.0
+    }
+  },
+  "premium_table": [
+    {
+      "cell": "Airports|am_peak|q1",
+      "cluster_name": "Airports",
+      "band": "am_peak",
+      "n": 277,
+      "premium_point": 0.05,
+      "premium_robust": 0.05,
+      "premium_today": 0.0812,
+      "q": 1
+    },
+    {
+      "cell": "Airports|am_peak|q2",
+      "cluster_name": "Airports",
+      "band": "am_peak",
+      "n": 176,
+      "premium_point": 0.1,
+      "premium_robust": 0.075,
+      "premium_today": 0.1182,
+      "q": 2
+    },
+    {
+      "cell": "Airports|am_peak|q3",
+      "cluster_name": "Airports",
+      "band": "am_peak",
+      "n": 214,
+      "premium_point": 0.025,
+      "premium_robust": 0.025,
+      "premium_today": 0.0714,
+      "q": 3
+    },
+    {
+      "cell": "Airports|am_peak|q4",
+      "cluster_name": "Airports",
+      "band": "am_peak",
+      "n": 207,
+      "premium_point": 0.05,
+      "premium_robust": 0.075,
+      "premium_today": 0.048,
+      "q": 4
+    },
+    {
+      "cell": "Airports|am_peak|q5",
+      "cluster_name": "Airports",
+      "band": "am_peak",
+      "n": 213,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0404,
+      "q": 5
+    },
+    {
+      "cell": "Airports|evening|q3",
+      "cluster_name": "Airports",
+      "band": "evening",
+      "n": 66,
+      "premium_point": 0.1,
+      "premium_robust": 0.1,
+      "premium_today": 0.1077,
+      "q": 3
+    },
+    {
+      "cell": "Airports|evening|q4",
+      "cluster_name": "Airports",
+      "band": "evening",
+      "n": 599,
+      "premium_point": 0.125,
+      "premium_robust": 0.025,
+      "premium_today": 0.0999,
+      "q": 4
+    },
+    {
+      "cell": "Airports|evening|q5",
+      "cluster_name": "Airports",
+      "band": "evening",
+      "n": 2238,
+      "premium_point": 0.05,
+      "premium_robust": 0.075,
+      "premium_today": 0.1006,
+      "q": 5
+    },
+    {
+      "cell": "Airports|midday|q1",
+      "cluster_name": "Airports",
+      "band": "midday",
+      "n": 310,
+      "premium_point": 0.05,
+      "premium_robust": 0.1,
+      "premium_today": 0.1053,
+      "q": 1
+    },
+    {
+      "cell": "Airports|midday|q2",
+      "cluster_name": "Airports",
+      "band": "midday",
+      "n": 926,
+      "premium_point": 0.1,
+      "premium_robust": 0.1,
+      "premium_today": 0.096,
+      "q": 2
+    },
+    {
+      "cell": "Airports|midday|q3",
+      "cluster_name": "Airports",
+      "band": "midday",
+      "n": 835,
+      "premium_point": 0.05,
+      "premium_robust": 0.05,
+      "premium_today": 0.0849,
+      "q": 3
+    },
+    {
+      "cell": "Airports|midday|q4",
+      "cluster_name": "Airports",
+      "band": "midday",
+      "n": 610,
+      "premium_point": 0.05,
+      "premium_robust": 0.05,
+      "premium_today": 0.0817,
+      "q": 4
+    },
+    {
+      "cell": "Airports|midday|q5",
+      "cluster_name": "Airports",
+      "band": "midday",
+      "n": 651,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0588,
+      "q": 5
+    },
+    {
+      "cell": "Airports|night|q1",
+      "cluster_name": "Airports",
+      "band": "night",
+      "n": 3,
+      "premium_point": 0.175,
+      "premium_robust": 0.275,
+      "premium_today": 0.0067,
+      "q": 1
+    },
+    {
+      "cell": "Airports|night|q2",
+      "cluster_name": "Airports",
+      "band": "night",
+      "n": 5,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.4031,
+      "q": 2
+    },
+    {
+      "cell": "Airports|night|q3",
+      "cluster_name": "Airports",
+      "band": "night",
+      "n": 30,
+      "premium_point": 0.0,
+      "premium_robust": 0.025,
+      "premium_today": 0.0179,
+      "q": 3
+    },
+    {
+      "cell": "Airports|night|q4",
+      "cluster_name": "Airports",
+      "band": "night",
+      "n": 138,
+      "premium_point": 0.025,
+      "premium_robust": 0.05,
+      "premium_today": 0.0671,
+      "q": 4
+    },
+    {
+      "cell": "Airports|night|q5",
+      "cluster_name": "Airports",
+      "band": "night",
+      "n": 724,
+      "premium_point": 0.075,
+      "premium_robust": 0.075,
+      "premium_today": 0.107,
+      "q": 5
+    },
+    {
+      "cell": "Airports|pm_peak|q1",
+      "cluster_name": "Airports",
+      "band": "pm_peak",
+      "n": 24,
+      "premium_point": 0.0,
+      "premium_robust": 0.025,
+      "premium_today": 0.1062,
+      "q": 1
+    },
+    {
+      "cell": "Airports|pm_peak|q2",
+      "cluster_name": "Airports",
+      "band": "pm_peak",
+      "n": 283,
+      "premium_point": 0.1,
+      "premium_robust": 0.125,
+      "premium_today": 0.0772,
+      "q": 2
+    },
+    {
+      "cell": "Airports|pm_peak|q3",
+      "cluster_name": "Airports",
+      "band": "pm_peak",
+      "n": 692,
+      "premium_point": 0.125,
+      "premium_robust": 0.1,
+      "premium_today": 0.0809,
+      "q": 3
+    },
+    {
+      "cell": "Airports|pm_peak|q4",
+      "cluster_name": "Airports",
+      "band": "pm_peak",
+      "n": 652,
+      "premium_point": 0.075,
+      "premium_robust": 0.1,
+      "premium_today": 0.0972,
+      "q": 4
+    },
+    {
+      "cell": "Airports|pm_peak|q5",
+      "cluster_name": "Airports",
+      "band": "pm_peak",
+      "n": 946,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.059,
+      "q": 5
+    },
+    {
+      "cell": "Commuter residential|am_peak|q1",
+      "cluster_name": "Commuter residential",
+      "band": "am_peak",
+      "n": 2372,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0394,
+      "q": 1
+    },
+    {
+      "cell": "Commuter residential|am_peak|q2",
+      "cluster_name": "Commuter residential",
+      "band": "am_peak",
+      "n": 4970,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0388,
+      "q": 2
+    },
+    {
+      "cell": "Commuter residential|am_peak|q3",
+      "cluster_name": "Commuter residential",
+      "band": "am_peak",
+      "n": 6736,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.048,
+      "q": 3
+    },
+    {
+      "cell": "Commuter residential|am_peak|q4",
+      "cluster_name": "Commuter residential",
+      "band": "am_peak",
+      "n": 7217,
+      "premium_point": 0.075,
+      "premium_robust": 0.075,
+      "premium_today": 0.0681,
+      "q": 4
+    },
+    {
+      "cell": "Commuter residential|am_peak|q5",
+      "cluster_name": "Commuter residential",
+      "band": "am_peak",
+      "n": 9465,
+      "premium_point": 0.25,
+      "premium_robust": 0.25,
+      "premium_today": 0.1131,
+      "q": 5
+    },
+    {
+      "cell": "Commuter residential|evening|q1",
+      "cluster_name": "Commuter residential",
+      "band": "evening",
+      "n": 2435,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0339,
+      "q": 1
+    },
+    {
+      "cell": "Commuter residential|evening|q2",
+      "cluster_name": "Commuter residential",
+      "band": "evening",
+      "n": 5411,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0303,
+      "q": 2
+    },
+    {
+      "cell": "Commuter residential|evening|q3",
+      "cluster_name": "Commuter residential",
+      "band": "evening",
+      "n": 5291,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0375,
+      "q": 3
+    },
+    {
+      "cell": "Commuter residential|evening|q4",
+      "cluster_name": "Commuter residential",
+      "band": "evening",
+      "n": 4635,
+      "premium_point": 0.15,
+      "premium_robust": 0.125,
+      "premium_today": 0.0619,
+      "q": 4
+    },
+    {
+      "cell": "Commuter residential|evening|q5",
+      "cluster_name": "Commuter residential",
+      "band": "evening",
+      "n": 5393,
+      "premium_point": 0.225,
+      "premium_robust": 0.2,
+      "premium_today": 0.1167,
+      "q": 5
+    },
+    {
+      "cell": "Commuter residential|midday|q1",
+      "cluster_name": "Commuter residential",
+      "band": "midday",
+      "n": 7927,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0337,
+      "q": 1
+    },
+    {
+      "cell": "Commuter residential|midday|q2",
+      "cluster_name": "Commuter residential",
+      "band": "midday",
+      "n": 11398,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0305,
+      "q": 2
+    },
+    {
+      "cell": "Commuter residential|midday|q3",
+      "cluster_name": "Commuter residential",
+      "band": "midday",
+      "n": 8723,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0377,
+      "q": 3
+    },
+    {
+      "cell": "Commuter residential|midday|q4",
+      "cluster_name": "Commuter residential",
+      "band": "midday",
+      "n": 7625,
+      "premium_point": 0.175,
+      "premium_robust": 0.2,
+      "premium_today": 0.0546,
+      "q": 4
+    },
+    {
+      "cell": "Commuter residential|midday|q5",
+      "cluster_name": "Commuter residential",
+      "band": "midday",
+      "n": 6102,
+      "premium_point": 0.25,
+      "premium_robust": 0.25,
+      "premium_today": 0.0946,
+      "q": 5
+    },
+    {
+      "cell": "Commuter residential|night|q1",
+      "cluster_name": "Commuter residential",
+      "band": "night",
+      "n": 775,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0398,
+      "q": 1
+    },
+    {
+      "cell": "Commuter residential|night|q2",
+      "cluster_name": "Commuter residential",
+      "band": "night",
+      "n": 2408,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0299,
+      "q": 2
+    },
+    {
+      "cell": "Commuter residential|night|q3",
+      "cluster_name": "Commuter residential",
+      "band": "night",
+      "n": 3809,
+      "premium_point": 0.025,
+      "premium_robust": 0.0,
+      "premium_today": 0.0369,
+      "q": 3
+    },
+    {
+      "cell": "Commuter residential|night|q4",
+      "cluster_name": "Commuter residential",
+      "band": "night",
+      "n": 3653,
+      "premium_point": 0.125,
+      "premium_robust": 0.1,
+      "premium_today": 0.0627,
+      "q": 4
+    },
+    {
+      "cell": "Commuter residential|night|q5",
+      "cluster_name": "Commuter residential",
+      "band": "night",
+      "n": 4510,
+      "premium_point": 0.25,
+      "premium_robust": 0.225,
+      "premium_today": 0.1323,
+      "q": 5
+    },
+    {
+      "cell": "Commuter residential|pm_peak|q1",
+      "cluster_name": "Commuter residential",
+      "band": "pm_peak",
+      "n": 3581,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0414,
+      "q": 1
+    },
+    {
+      "cell": "Commuter residential|pm_peak|q2",
+      "cluster_name": "Commuter residential",
+      "band": "pm_peak",
+      "n": 7770,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0358,
+      "q": 2
+    },
+    {
+      "cell": "Commuter residential|pm_peak|q3",
+      "cluster_name": "Commuter residential",
+      "band": "pm_peak",
+      "n": 7225,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0433,
+      "q": 3
+    },
+    {
+      "cell": "Commuter residential|pm_peak|q4",
+      "cluster_name": "Commuter residential",
+      "band": "pm_peak",
+      "n": 5997,
+      "premium_point": 0.15,
+      "premium_robust": 0.175,
+      "premium_today": 0.0761,
+      "q": 4
+    },
+    {
+      "cell": "Commuter residential|pm_peak|q5",
+      "cluster_name": "Commuter residential",
+      "band": "pm_peak",
+      "n": 6089,
+      "premium_point": 0.2,
+      "premium_robust": 0.225,
+      "premium_today": 0.1252,
+      "q": 5
+    },
+    {
+      "cell": "Core|am_peak|q1",
+      "cluster_name": "Core",
+      "band": "am_peak",
+      "n": 4167,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0822,
+      "q": 1
+    },
+    {
+      "cell": "Core|am_peak|q2",
+      "cluster_name": "Core",
+      "band": "am_peak",
+      "n": 3528,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0764,
+      "q": 2
+    },
+    {
+      "cell": "Core|am_peak|q3",
+      "cluster_name": "Core",
+      "band": "am_peak",
+      "n": 3976,
+      "premium_point": 0.05,
+      "premium_robust": 0.05,
+      "premium_today": 0.0942,
+      "q": 3
+    },
+    {
+      "cell": "Core|am_peak|q4",
+      "cluster_name": "Core",
+      "band": "am_peak",
+      "n": 4413,
+      "premium_point": 0.125,
+      "premium_robust": 0.125,
+      "premium_today": 0.1095,
+      "q": 4
+    },
+    {
+      "cell": "Core|am_peak|q5",
+      "cluster_name": "Core",
+      "band": "am_peak",
+      "n": 4386,
+      "premium_point": 0.2,
+      "premium_robust": 0.225,
+      "premium_today": 0.171,
+      "q": 5
+    },
+    {
+      "cell": "Core|evening|q1",
+      "cluster_name": "Core",
+      "band": "evening",
+      "n": 9107,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0674,
+      "q": 1
+    },
+    {
+      "cell": "Core|evening|q2",
+      "cluster_name": "Core",
+      "band": "evening",
+      "n": 6124,
+      "premium_point": 0.025,
+      "premium_robust": 0.025,
+      "premium_today": 0.0762,
+      "q": 2
+    },
+    {
+      "cell": "Core|evening|q3",
+      "cluster_name": "Core",
+      "band": "evening",
+      "n": 6168,
+      "premium_point": 0.125,
+      "premium_robust": 0.15,
+      "premium_today": 0.1177,
+      "q": 3
+    },
+    {
+      "cell": "Core|evening|q4",
+      "cluster_name": "Core",
+      "band": "evening",
+      "n": 7054,
+      "premium_point": 0.15,
+      "premium_robust": 0.15,
+      "premium_today": 0.1422,
+      "q": 4
+    },
+    {
+      "cell": "Core|evening|q5",
+      "cluster_name": "Core",
+      "band": "evening",
+      "n": 6197,
+      "premium_point": 0.15,
+      "premium_robust": 0.15,
+      "premium_today": 0.1687,
+      "q": 5
+    },
+    {
+      "cell": "Core|midday|q1",
+      "cluster_name": "Core",
+      "band": "midday",
+      "n": 15931,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0733,
+      "q": 1
+    },
+    {
+      "cell": "Core|midday|q2",
+      "cluster_name": "Core",
+      "band": "midday",
+      "n": 6962,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0621,
+      "q": 2
+    },
+    {
+      "cell": "Core|midday|q3",
+      "cluster_name": "Core",
+      "band": "midday",
+      "n": 6120,
+      "premium_point": 0.125,
+      "premium_robust": 0.125,
+      "premium_today": 0.0802,
+      "q": 3
+    },
+    {
+      "cell": "Core|midday|q4",
+      "cluster_name": "Core",
+      "band": "midday",
+      "n": 5976,
+      "premium_point": 0.15,
+      "premium_robust": 0.175,
+      "premium_today": 0.0943,
+      "q": 4
+    },
+    {
+      "cell": "Core|midday|q5",
+      "cluster_name": "Core",
+      "band": "midday",
+      "n": 3146,
+      "premium_point": 0.15,
+      "premium_robust": 0.125,
+      "premium_today": 0.1507,
+      "q": 5
+    },
+    {
+      "cell": "Core|night|q1",
+      "cluster_name": "Core",
+      "band": "night",
+      "n": 3543,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0579,
+      "q": 1
+    },
+    {
+      "cell": "Core|night|q2",
+      "cluster_name": "Core",
+      "band": "night",
+      "n": 3227,
+      "premium_point": 0.025,
+      "premium_robust": 0.025,
+      "premium_today": 0.0716,
+      "q": 2
+    },
+    {
+      "cell": "Core|night|q3",
+      "cluster_name": "Core",
+      "band": "night",
+      "n": 3438,
+      "premium_point": 0.075,
+      "premium_robust": 0.1,
+      "premium_today": 0.0895,
+      "q": 3
+    },
+    {
+      "cell": "Core|night|q4",
+      "cluster_name": "Core",
+      "band": "night",
+      "n": 4561,
+      "premium_point": 0.15,
+      "premium_robust": 0.15,
+      "premium_today": 0.1517,
+      "q": 4
+    },
+    {
+      "cell": "Core|night|q5",
+      "cluster_name": "Core",
+      "band": "night",
+      "n": 4963,
+      "premium_point": 0.2,
+      "premium_robust": 0.2,
+      "premium_today": 0.2531,
+      "q": 5
+    },
+    {
+      "cell": "Core|pm_peak|q1",
+      "cluster_name": "Core",
+      "band": "pm_peak",
+      "n": 9751,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0781,
+      "q": 1
+    },
+    {
+      "cell": "Core|pm_peak|q2",
+      "cluster_name": "Core",
+      "band": "pm_peak",
+      "n": 6976,
+      "premium_point": 0.0,
+      "premium_robust": 0.0,
+      "premium_today": 0.0776,
+      "q": 2
+    },
+    {
+      "cell": "Core|pm_peak|q3",
+      "cluster_name": "Core",
+      "band": "pm_peak",
+      "n": 6770,
+      "premium_point": 0.075,
+      "premium_robust": 0.1,
+      "premium_today": 0.107,
+      "q": 3
+    },
+    {
+      "cell": "Core|pm_peak|q4",
+      "cluster_name": "Core",
+      "band": "pm_peak",
+      "n": 6717,
+      "premium_point": 0.175,
+      "premium_robust": 0.175,
+      "premium_today": 0.1291,
+      "q": 4
+    },
+    {
+      "cell": "Core|pm_peak|q5",
+      "cluster_name": "Core",
+      "band": "pm_peak",
+      "n": 4854,
+      "premium_point": 0.225,
+      "premium_robust": 0.2,
+      "premium_today": 0.2007,
+      "q": 5
+    },
+    {
+      "cell": "Long waits|am_peak|q1",
+      "cluster_name": "Long waits",
+      "band": "am_peak",
+      "n": 12,
+      "premium_point": 0.05,
+      "premium_robust": 0.1,
+      "premium_today": 0.2152,
+      "q": 1
+    },
+    {
+      "cell": "Long waits|am_peak|q2",
+      "cluster_name": "Long waits",
+      "band": "am_peak",
+      "n": 18,
+      "premium_point": 0.15,
+      "premium_robust": 0.15,
+      "premium_today": 0.0571,
+      "q": 2
+    },
+    {
+      "cell": "Long waits|am_peak|q3",
+      "cluster_name": "Long waits",
+      "band": "am_peak",
+      "n": 23,
+      "premium_point": 0.175,
+      "premium_robust": 0.15,
+      "premium_today": 0.0549,
+      "q": 3
+    },
+    {
+      "cell": "Long waits|am_peak|q4",
+      "cluster_name": "Long waits",
+      "band": "am_peak",
+      "n": 40,
+      "premium_point": 0.1,
+      "premium_robust": 0.1,
+      "premium_today": 0.0834,
+      "q": 4
+    },
+    {
+      "cell": "Long waits|am_peak|q5",
+      "cluster_name": "Long waits",
+      "band": "am_peak",
+      "n": 95,
+      "premium_point": 0.2,
+      "premium_robust": 0.175,
+      "premium_today": 0.0693,
+      "q": 5
+    },
+    {
+      "cell": "Long waits|evening|q1",
+      "cluster_name": "Long waits",
+      "band": "evening",
+      "n": 22,
+      "premium_point": 0.075,
+      "premium_robust": 0.05,
+      "premium_today": 0.0116,
+      "q": 1
+    },
+    {
+      "cell": "Long waits|evening|q2",
+      "cluster_name": "Long waits",
+      "band": "evening",
+      "n": 18,
+      "premium_point": 0.125,
+      "premium_robust": 0.15,
+      "premium_today": 0.098,
+      "q": 2
+    },
+    {
+      "cell": "Long waits|evening|q3",
+      "cluster_name": "Long waits",
+      "band": "evening",
+      "n": 27,
+      "premium_point": 0.1,
+      "premium_robust": 0.15,
+      "premium_today": 0.0345,
+      "q": 3
+    },
+    {
+      "cell": "Long waits|evening|q4",
+      "cluster_name": "Long waits",
+      "band": "evening",
+      "n": 44,
+      "premium_point": 0.2,
+      "premium_robust": 0.225,
+      "premium_today": 0.1498,
+      "q": 4
+    },
+    {
+      "cell": "Long waits|evening|q5",
+      "cluster_name": "Long waits",
+      "band": "evening",
+      "n": 93,
+      "premium_point": 0.3,
+      "premium_robust": 0.3,
+      "premium_today": 0.2231,
+      "q": 5
+    },
+    {
+      "cell": "Long waits|midday|q1",
+      "cluster_name": "Long waits",
+      "band": "midday",
+      "n": 62,
+      "premium_point": 0.0,
+      "premium_robust": 0.025,
+      "premium_today": 0.0842,
+      "q": 1
+    },
+    {
+      "cell": "Long waits|midday|q2",
+      "cluster_name": "Long waits",
+      "band": "midday",
+      "n": 62,
+      "premium_point": 0.0,
+      "premium_robust": 0.025,
+      "premium_today": 0.0462,
+      "q": 2
+    },
+    {
+      "cell": "Long waits|midday|q3",
+      "cluster_name": "Long waits",
+      "band": "midday",
+      "n": 100,
+      "premium_point": 0.075,
+      "premium_robust": 0.125,
+      "premium_today": 0.0784,
+      "q": 3
+    },
+    {
+      "cell": "Long waits|midday|q4",
+      "cluster_name": "Long waits",
+      "band": "midday",
+      "n": 89,
+      "premium_point": 0.175,
+      "premium_robust": 0.2,
+      "premium_today": 0.1202,
+      "q": 4
+    },
+    {
+      "cell": "Long waits|midday|q5",
+      "cluster_name": "Long waits",
+      "band": "midday",
+      "n": 96,
+      "premium_point": 0.275,
+      "premium_robust": 0.3,
+      "premium_today": 0.1055,
+      "q": 5
+    },
+    {
+      "cell": "Long waits|night|q1",
+      "cluster_name": "Long waits",
+      "band": "night",
+      "n": 8,
+      "premium_point": 0.1,
+      "premium_robust": 0.05,
+      "premium_today": 0.042,
+      "q": 1
+    },
+    {
+      "cell": "Long waits|night|q2",
+      "cluster_name": "Long waits",
+      "band": "night",
+      "n": 14,
+      "premium_point": 0.075,
+      "premium_robust": 0.025,
+      "premium_today": 0.0591,
+      "q": 2
+    },
+    {
+      "cell": "Long waits|night|q3",
+      "cluster_name": "Long waits",
+      "band": "night",
+      "n": 16,
+      "premium_point": 0.1,
+      "premium_robust": 0.075,
+      "premium_today": 0.0253,
+      "q": 3
+    },
+    {
+      "cell": "Long waits|night|q4",
+      "cluster_name": "Long waits",
+      "band": "night",
+      "n": 23,
+      "premium_point": 0.3,
+      "premium_robust": 0.225,
+      "premium_today": 0.0711,
+      "q": 4
+    },
+    {
+      "cell": "Long waits|night|q5",
+      "cluster_name": "Long waits",
+      "band": "night",
+      "n": 66,
+      "premium_point": 0.3,
+      "premium_robust": 0.25,
+      "premium_today": 0.1428,
+      "q": 5
+    },
+    {
+      "cell": "Long waits|pm_peak|q1",
+      "cluster_name": "Long waits",
+      "band": "pm_peak",
+      "n": 18,
+      "premium_point": 0.075,
+      "premium_robust": 0.05,
+      "premium_today": 0.0983,
+      "q": 1
+    },
+    {
+      "cell": "Long waits|pm_peak|q2",
+      "cluster_name": "Long waits",
+      "band": "pm_peak",
+      "n": 49,
+      "premium_point": 0.05,
+      "premium_robust": 0.05,
+      "premium_today": 0.0988,
+      "q": 2
+    },
+    {
+      "cell": "Long waits|pm_peak|q3",
+      "cluster_name": "Long waits",
+      "band": "pm_peak",
+      "n": 65,
+      "premium_point": 0.15,
+      "premium_robust": 0.15,
+      "premium_today": 0.0263,
+      "q": 3
+    },
+    {
+      "cell": "Long waits|pm_peak|q4",
+      "cluster_name": "Long waits",
+      "band": "pm_peak",
+      "n": 75,
+      "premium_point": 0.175,
+      "premium_robust": 0.15,
+      "premium_today": 0.1448,
+      "q": 4
+    },
+    {
+      "cell": "Long waits|pm_peak|q5",
+      "cluster_name": "Long waits",
+      "band": "pm_peak",
+      "n": 98,
+      "premium_point": 0.225,
+      "premium_robust": 0.225,
+      "premium_today": 0.1501,
+      "q": 5
+    }
+  ],
+  "sim": {
+    "days": [
+      "2025-06-10",
+      "2025-06-14"
+    ],
+    "supply_profile": {
+      "2025-06-10": [
+        0.3126,
+        0.3652,
+        0.6424,
+        1.0236,
+        1.517,
+        1.6899,
+        1.2562,
+        0.8004,
+        0.77,
+        0.8697,
+        0.7477,
+        0.6842,
+        0.7265,
+        0.7321,
+        0.802,
+        0.8468,
+        0.8105,
+        0.8045,
+        0.6541,
+        0.4911,
+        0.6132,
+        0.881,
+        0.7916,
+        0.4851
+      ],
+      "2025-06-14": [
+        0.2879,
+        0.4136,
+        0.5265,
+        0.4226,
+        0.6327,
+        1.1765,
+        1.1219,
+        0.9308,
+        1.0254,
+        0.8697,
+        0.6721,
+        0.6272,
+        0.6509,
+        0.7345,
+        0.7983,
+        0.7843,
+        0.7203,
+        0.5963,
+        0.5309,
+        0.5833,
+        0.6487,
+        0.6222,
+        0.6082,
+        0.4391
+      ]
+    },
+    "real_mean_wait": {
+      "2025-06-10": 4.859253643797427,
+      "2025-06-14": 5.385481072783618
+    },
+    "hourly_corr": {
+      "2025-06-10": 0.8281685998698771,
+      "2025-06-14": 0.5789175628487111
+    },
+    "validation": [
+      {
+        "day": "2025-06-10",
+        "real mean": 4.8593,
+        "sim mean": 4.8381,
+        "real median (not targeted)": 4.2,
+        "sim median": 3.8689,
+        "real p90 (not targeted)": 8.2667,
+        "sim p90": 9.3544,
+        "hourly corr": 0.8282
+      },
+      {
+        "day": "2025-06-14",
+        "real mean": 5.3855,
+        "sim mean": 5.299,
+        "real median (not targeted)": 4.6833,
+        "sim median": 3.912,
+        "real p90 (not targeted)": 9.2167,
+        "sim p90": 10.9014,
+        "hourly corr": 0.5789
+      }
+    ],
+    "table": [
+      {
+        "pay": "Robust policy",
+        "matching": "batch",
+        "completion": 0.93792,
+        "first_offer_acceptance": 0.71674,
+        "wait_mean_min": 4.91578,
+        "wait_p90_min": 9.7535,
+        "pickup_mean_min": 3.46134,
+        "margin_per_request": 2.96458,
+        "pay_per_trip": 18.80909,
+        "earnings_per_online_hour": 57.17372
+      },
+      {
+        "pay": "Robust policy",
+        "matching": "greedy",
+        "completion": 0.95172,
+        "first_offer_acceptance": 0.71613,
+        "wait_mean_min": 12.18334,
+        "wait_p90_min": 23.09568,
+        "pickup_mean_min": 4.90411,
+        "margin_per_request": 3.10768,
+        "pay_per_trip": 18.83023,
+        "earnings_per_online_hour": 54.63838
+      },
+      {
+        "pay": "Today's pay",
+        "matching": "batch",
+        "completion": 0.93098,
+        "first_offer_acceptance": 0.70257,
+        "wait_mean_min": 5.06139,
+        "wait_p90_min": 10.11455,
+        "pickup_mean_min": 3.41335,
+        "margin_per_request": 3.07716,
+        "pay_per_trip": 18.63805,
+        "earnings_per_online_hour": 56.77233
+      },
+      {
+        "pay": "Today's pay",
+        "matching": "greedy",
+        "completion": 0.93811,
+        "first_offer_acceptance": 0.70274,
+        "wait_mean_min": 14.4332,
+        "wait_p90_min": 24.06526,
+        "pickup_mean_min": 4.95034,
+        "margin_per_request": 3.16848,
+        "pay_per_trip": 18.68639,
+        "earnings_per_online_hour": 54.03113
+      }
+    ],
+    "effects": [
+      {
+        "comparison": "Robust policy \u2212 today's pay",
+        "kpi": "completion",
+        "mean": 0.00694,
+        "lo": -0.00111,
+        "hi": 0.01498
+      },
+      {
+        "comparison": "Robust policy \u2212 today's pay",
+        "kpi": "first_offer_acceptance",
+        "mean": 0.01418,
+        "lo": 0.01337,
+        "hi": 0.01498
+      },
+      {
+        "comparison": "Robust policy \u2212 today's pay",
+        "kpi": "wait_mean_min",
+        "mean": -0.14561,
+        "lo": -0.2665,
+        "hi": -0.02472
+      },
+      {
+        "comparison": "Robust policy \u2212 today's pay",
+        "kpi": "wait_p90_min",
+        "mean": -0.36105,
+        "lo": -0.67436,
+        "hi": -0.04775
+      },
+      {
+        "comparison": "Robust policy \u2212 today's pay",
+        "kpi": "pickup_mean_min",
+        "mean": 0.04799,
+        "lo": -0.09756,
+        "hi": 0.19354
+      },
+      {
+        "comparison": "Robust policy \u2212 today's pay",
+        "kpi": "margin_per_request",
+        "mean": -0.11258,
+        "lo": -0.13704,
+        "hi": -0.08811
+      },
+      {
+        "comparison": "Robust policy \u2212 today's pay",
+        "kpi": "pay_per_trip",
+        "mean": 0.17105,
+        "lo": 0.10293,
+        "hi": 0.23916
+      },
+      {
+        "comparison": "Robust policy \u2212 today's pay",
+        "kpi": "earnings_per_online_hour",
+        "mean": 0.40139,
+        "lo": 0.21316,
+        "hi": 0.58962
+      },
+      {
+        "comparison": "Batched \u2212 greedy matching",
+        "kpi": "completion",
+        "mean": -0.01047,
+        "lo": -0.01355,
+        "hi": -0.00738
+      },
+      {
+        "comparison": "Batched \u2212 greedy matching",
+        "kpi": "first_offer_acceptance",
+        "mean": 0.00022,
+        "lo": -0.00011,
+        "hi": 0.00054
+      },
+      {
+        "comparison": "Batched \u2212 greedy matching",
+        "kpi": "wait_mean_min",
+        "mean": -8.31969,
+        "lo": -11.03673,
+        "hi": -5.60264
+      },
+      {
+        "comparison": "Batched \u2212 greedy matching",
+        "kpi": "wait_p90_min",
+        "mean": -13.64645,
+        "lo": -14.66863,
+        "hi": -12.62426
+      },
+      {
+        "comparison": "Batched \u2212 greedy matching",
+        "kpi": "pickup_mean_min",
+        "mean": -1.48989,
+        "lo": -1.76282,
+        "hi": -1.21695
+      },
+      {
+        "comparison": "Batched \u2212 greedy matching",
+        "kpi": "margin_per_request",
+        "mean": -0.11721,
+        "lo": -0.14143,
+        "hi": -0.09298
+      },
+      {
+        "comparison": "Batched \u2212 greedy matching",
+        "kpi": "pay_per_trip",
+        "mean": -0.03474,
+        "lo": -0.05301,
+        "hi": -0.01647
+      },
+      {
+        "comparison": "Batched \u2212 greedy matching",
+        "kpi": "earnings_per_online_hour",
+        "mean": 2.63827,
+        "lo": 1.97351,
+        "hi": 3.30302
+      }
+    ]
+  }
+}
