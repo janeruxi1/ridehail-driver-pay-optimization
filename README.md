@@ -1,6 +1,7 @@
 # Driver pay in a ride-hailing marketplace
 
-[![CI](https://github.com/janeruxi1/ridehail-driver-pay/actions/workflows/ci.yml/badge.svg)](https://github.com/janeruxi1/ridehail-driver-pay/actions/workflows/ci.yml)
+[![Live Demo](https://img.shields.io/badge/Streamlit-Live%20Demo-FF4B4B?logo=streamlit)](https://janeruxi1-ridehail-driver-pay.streamlit.app/)
+[![CI](https://github.com/janeruxi1/ridehail-driver-pay-optimization/actions/workflows/ci.yml/badge.svg)](https://github.com/janeruxi1/ridehail-driver-pay-optimization/actions/workflows/ci.yml)
 
 **What should a ride-hailing platform offer a driver for a trip?** Pay too little and riders wait,
 cancel and drivers stop driving; pay too much and the margin disappears. This project answers that
@@ -26,6 +27,8 @@ tested in a dispatch simulation, a quote API in Docker with CI/CD, and a switchb
 | What should we pay? | A robust MILP policy: **+2.8% margin per request** on held-out months, scored against the truth, with rider wait, acceptance and driver earnings guardrails all met. Cutting to the floor would "earn" +27% and break all three. | [06](notebooks/06_pay_policy_simulation.ipynb) |
 | Does it hold up with real requests and moving drivers? | In a dispatch simulation replaying the real Brooklyn requests of two days, the policy raises first-offer acceptance by 1.4 points and cuts the p90 wait by 0.36 min, at a cost of $0.11 of margin per request there (as the expected-value model predicts for Brooklyn). Batched matching cuts mean wait by 8.3 min vs greedy. | [06](notebooks/06_pay_policy_simulation.ipynb) |
 | How do we roll it out? | Switchback test: region × 2-hour blocks, first hour washed out, randomization inference; sized on real data: **8 weeks** to detect the expected effect. | [07](notebooks/07_switchback_design.ipynb) |
+
+🎮 **[Try the live demo](https://janeruxi1-ridehail-driver-pay.streamlit.app/)**: quote a trip, explore where the policy puts premiums, and size the rollout test.
 
 Every number here is read from [`reports/metrics/`](reports/metrics), written by the notebooks when they
 run on the real data. The decision write-up is in [`reports/decision_memo.md`](reports/decision_memo.md).
@@ -105,12 +108,13 @@ src/ridepay/           package: etl (PySpark), data (DuckDB views), pay (floor),
 scripts/               build_tables (Spark pipeline) · extract_sim_requests · export_model ·
                        make_synthetic (CI data) · build_notebooks (.py → executed .ipynb)
 notebooks/             0N_*.py (source of truth) and executed 0N_*.ipynb
+app/                   Streamlit demo (runs on the committed artifacts only)
 tests/                 cleaning rules on known-answer rows, estimators recovering known effects,
                        optimizer guardrails, simulator, API
 reports/               metrics/*.json · figures/ · decision memo · model card · brief · metric framework
 models/quote_model.json  the served artifact (versioned with the code)
 data/zones/            taxi-zone centroids and outlines (from the TLC shapefile)
-.github/workflows/     ci.yml (lint, tests, notebooks on a synthetic city, Docker smoke test) · cd.yml (GHCR)
+.github/workflows/     ci.yml (lint, tests, demo, notebooks on a synthetic city, Docker smoke test) · cd.yml (GHCR)
 ```
 
 ## Reproduce
@@ -122,6 +126,7 @@ python scripts/extract_sim_requests.py          # two days of Brooklyn requests 
 python scripts/build_notebooks.py --execute     # runs 01–07 on the real tables (~30 min)
 python scripts/export_model.py                  # writes models/quote_model.json
 pytest -q
+streamlit run app/streamlit_app.py              # the demo
 ```
 
 No download needed to try the code: `python scripts/make_synthetic.py` builds a small fake city in the
