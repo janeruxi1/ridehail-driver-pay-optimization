@@ -53,7 +53,7 @@ def get_model() -> QuoteModel:
 
 
 app = FastAPI(title="ridepay quote service", version="1.0.0",
-              description="Recommended driver pay per trip (portfolio project; scenario on NYC TLC data).")
+              description="Recommended driver pay per trip (a scenario on NYC TLC data).")
 
 
 @app.get("/health")

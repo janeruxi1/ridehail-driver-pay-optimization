@@ -191,7 +191,7 @@ wait_sd = float(np.std([a[0] for a in aa]))
 print(f"rider wait: sd of the A/A estimate {wait_sd:.3f} min → minimum detectable change ≈ {2.8 * wait_sd:.2f} min")
 
 # %% [markdown]
-# ## Pre-registered decision rule
+# ## Decision rule, fixed before the test
 #
 # Written now, before the test:
 # 1. Run the chosen design (below) for the planned number of weeks; no early stopping on the primary

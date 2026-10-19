@@ -15,11 +15,12 @@ switchback test** before full rollout.
    7.9% of driver pay, but much of it goes to easy trips that drivers accept anyway,
    and too little to the hardest trips, where pay buys faster acceptance.
 2. **Pay works better than the history suggests.** Because premiums go to the trips drivers dislike,
-   the raw data credits pay with about 50% of its true effect. Causal methods
-   (double machine learning, validated by a randomized pay test) recover it: about
-   6.3 points of first-offer acceptance per 10% more pay on average, more at night and where
-   drivers are scarce.
-3. **The policy is better on every guardrail, out of sample.** On April–June 2025 trips it never saw:
+   the raw data credits pay with about 50% of its true effect: 3.2 points of first-offer acceptance
+   per 10% more pay, against a true average of 6.3, more at night and where drivers are scarce.
+   A randomized pay test measures 6.3 points, and double machine learning recovers the
+   (differently weighted) average it targets; the acceptance model built on both predicts what
+   the test measured.
+3. **The policy meets every guardrail, out of sample.** On April–June 2025 trips it never saw:
 
 | | Today | Robust policy |
 |---|---|---|
@@ -40,9 +41,11 @@ switchback test** before full rollout.
 
 - **Pay the floor only.** Looks like +27% margin, but acceptance falls to
   64.8% and driver earnings per hour by 8%: it breaks all three guardrails, and drivers would leave.
-- **The best-guess (non-robust) policy.** 0.4 points more margin, but it meets the wait
-  guardrail in only 20% of plausible versions of the acceptance model. The robust policy meets all
-  guardrails in all of them.
+- **The best-guess (non-robust) policy.** 0.4 percentage points more margin growth, but it meets
+  the wait guardrail in only 4 of the 20 plausible versions of the acceptance model that the robust
+  policy is built to satisfy. (The robust policy meets them all by construction; held out and scored
+  against the truth, both policies meet every guardrail, so the robust one is insurance against
+  the model being wrong.)
 
 ## Risks
 
@@ -52,7 +55,7 @@ switchback test** before full rollout.
 - Matching matters as much as pay: batched assignment cut mean wait by 8.3 minutes vs greedy in
   simulation, but left some isolated requests waiting too long; dispatch should be tuned alongside.
 
-## Test plan (pre-registered)
+## Test plan (fixed before the test)
 
 - **Design:** randomize region × 2-hour blocks, balanced within each region-day; drop the first hour after
   each switch (carryover). 12 regions.

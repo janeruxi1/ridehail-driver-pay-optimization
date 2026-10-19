@@ -78,7 +78,7 @@ rule is counted, and two rules were changed after the first real month showed th
 | 5 | [Pay-to-accept](notebooks/05_pay_to_accept.ipynb) | Naive vs double machine learning (cross-fitted) vs randomized IV, each against the true value of its own estimand; Bayesian hierarchical logit (PyMC) with diagnostics and posterior predictive checks |
 | 6 | [Policy and simulation](notebooks/06_pay_policy_simulation.ipynb) | Mixed-integer program (HiGHS) with guardrails, robust over posterior draws; out-of-sample scoring against the truth; discrete-event dispatch simulation with Hungarian-algorithm batch matching |
 | 7 | [Quote service](src/ridepay/api.py) | Installable package, FastAPI + Pydantic, Docker, GitHub Actions CI and CD to GHCR, [model card](reports/model_card.md) |
-| 8 | [Switchback test](notebooks/07_switchback_design.ipynb) + [memo](reports/decision_memo.md) | Switchback design sized by simulation on real block-to-block variation; randomization inference; pre-registered decision rule |
+| 8 | [Switchback test](notebooks/07_switchback_design.ipynb) + [memo](reports/decision_memo.md) | Switchback design sized by simulation on real block-to-block variation; randomization inference; decision rule fixed before the test |
 
 ## Quote service
 

@@ -5,7 +5,7 @@
 | **What it does** | Recommends the driver pay for a trip: the NYC minimum pay for its miles and minutes, plus a premium of 0–30% chosen by a constrained optimizer |
 | **Served by** | `POST /quote` (FastAPI, `src/ridepay/api.py`); artifact `models/quote_model.json` |
 | **Version** | `model_version` in the artifact (content hash) and in every API response |
-| **Status** | Portfolio project. A scenario on public data, not a deployed system |
+| **Status** | A scenario on public data, not a deployed system |
 
 ## Inputs and outputs
 
@@ -34,7 +34,7 @@ quintile, predicted first-offer acceptance, completion probability and expected 
 
 - Held out (April–June 2025 trips, scored against the planted truth): margin per request +2.8% vs
   today's pay, with all guardrails met; the non-robust policy violated the wait guardrail in 80% of
-  posterior draws.
+  the 20 posterior draws the robust policy is constrained to satisfy.
 - Dispatch simulation on two real days of Brooklyn requests: first-offer acceptance +1.4 points, p90
   wait −0.36 min, margin −$0.11 per request in Brooklyn, where the policy deliberately spends margin
   to buy service (`reports/metrics/06_policy_simulation.json`).
@@ -63,5 +63,5 @@ quintile, predicted first-offer acceptance, completion probability and expected 
 
 - Input drift: share of requests per segment and difficulty quintile vs training.
 - Calibration: predicted vs observed first-offer acceptance by decile, weekly.
-- Guardrails: wait, acceptance and earnings per hour by segment, against the pre-registered thresholds.
+- Guardrails: wait, acceptance and earnings per hour by segment, against the thresholds fixed before the test.
 - Keep a small randomized pay slice running to re-check the causal slope.

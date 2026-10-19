@@ -409,11 +409,12 @@ show_verdict(
         f"**Floor-only is a trap**: it pays least but {'breaks' if not H.loc['Floor only', ['C3_wait', 'C4_acceptance', 'C5_earnings']].all() else 'keeps'} "
         f"the guardrails (acceptance {H.loc['Floor only', 'first_offer_acceptance']:.1%}, margin "
         f"{H.loc['Floor only', 'margin_vs_today_pct']:+.1f}% once cancellations are counted).",
-        f"**Robustness has a price and a payoff**: the point policy (best guess only) meets the wait guardrail in "
+        f"**Robustness is insurance, at {H.loc['Optimized (point)', 'margin_vs_today_pct'] - rob['margin_vs_today_pct']:.1f} "
+        f"points of margin**: the point policy (best guess only) meets the wait guardrail in "
         f"{point_in_draws['C3_wait']:.0%}, acceptance in {point_in_draws['C4_acceptance']:.0%} and earnings in "
-        f"{point_in_draws['C5_earnings']:.0%} of posterior draws; the robust policy meets all three in "
-        f"{robust_in_draws.min():.0%} of them, for {H.loc['Optimized (point)', 'margin_vs_today_pct'] - rob['margin_vs_today_pct']:.1f} "
-        f"points of margin. Cell premiums differ by {stability['mean_abs_diff_pts']:.1f} points on average across plausible "
+        f"{point_in_draws['C5_earnings']:.0%} of the {D} posterior draws the robust policy is built to satisfy (the robust "
+        f"policy meets all three in each of them by construction). Held out and scored against the truth, both policies "
+        f"meet all three. Cell premiums differ by {stability['mean_abs_diff_pts']:.1f} points on average across plausible "
         "worlds, so trust the policy at segment level, not cell by cell.",
         f"**In the dispatch simulation** (real Brooklyn requests; driver supply calibrated hour by hour to real waits; "
         f"untargeted p90 wait {check['sim p90'].mean():.1f} min simulated vs {check['real p90 (not targeted)'].mean():.1f} real), "

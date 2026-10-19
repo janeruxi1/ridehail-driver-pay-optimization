@@ -162,9 +162,10 @@ with tab_policy:
     pt_draws = m6["guardrails_in_draws"]["point"]
     st.markdown(
         f"Paying only the minimum looks like **{flo['margin_vs_today_pct']:+.0f}%** margin but breaks every guardrail. "
-        f"The best-guess optimum meets the wait guardrail in only **{pt_draws['C3_wait']:.0%}** of plausible versions of "
-        "the acceptance model; the robust policy, which must meet all guardrails in 20 posterior draws at once, gives up "
-        f"{H['Optimized (point)']['margin_vs_today_pct'] - rob['margin_vs_today_pct']:.1f} points of margin for that.")
+        f"The best-guess optimum meets the wait guardrail in only **{pt_draws['C3_wait']:.0%}** of 20 plausible versions "
+        "of the acceptance model (posterior draws). The robust policy is built to meet all guardrails in all 20 at once "
+        f"and gives up {H['Optimized (point)']['margin_vs_today_pct'] - rob['margin_vs_today_pct']:.1f} points of margin "
+        "for that insurance; held out and scored against the truth, both meet every guardrail.")
 
     st.markdown("#### Where the premium goes")
     pt = pd.DataFrame(m6["premium_table"])

@@ -42,7 +42,7 @@ Each phase ends with an executed notebook (ending in a verdict), a JSON record o
 | 5 | Pay-to-accept model | Simulated on real trips | Naive vs. double machine learning vs. the randomized test; Bayesian hierarchical model by segment | Acceptance curves with intervals; recovery vs. truth |
 | 6 | Pay policy, matching and simulation | Real trips and requests + simulated drivers | Constrained pay optimization (MILP) robust to posterior uncertainty; driver–trip matching as an assignment problem; discrete-event dispatch simulation | Recommended policy vs. today's pay |
 | 7 | Production | — | Installable package; FastAPI quote endpoint; Docker; CI and CD (image built and published on merge); model card | `docker run` → `POST /quote` |
-| 8 | Rollout test and memo | Real (sizing) | Switchback design sized by simulation on real block-to-block variation; pre-registered decision rule; decision memo | `notebooks/07_switchback_design`, `reports/decision_memo.md` |
+| 8 | Rollout test and memo | Real (sizing) | Switchback design sized by simulation on real block-to-block variation; decision rule fixed before the test; decision memo | `notebooks/07_switchback_design`, `reports/decision_memo.md` |
 
 ## Rules
 
