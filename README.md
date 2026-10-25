@@ -31,7 +31,8 @@ tested in a dispatch simulation, a quote API in Docker with CI/CD, and a switchb
 🎮 **[Try the live demo](https://janeruxi1-ridehail-driver-pay-optimization.streamlit.app/)**: quote a trip, explore where the policy puts premiums, and size the rollout test.
 
 Every number here is read from [`reports/metrics/`](reports/metrics), written by the notebooks when they
-run on the real data. The decision write-up is in [`reports/decision_memo.md`](reports/decision_memo.md).
+run on the real data, and CI checks the key ones in this README, the memo and the model card against those
+records. The decision write-up is in [`reports/decision_memo.md`](reports/decision_memo.md).
 
 ![Today's premium vs the robust policy, by segment and trip difficulty](reports/figures/06_premium_map.png)
 
@@ -110,7 +111,7 @@ scripts/               build_tables (Spark pipeline) · extract_sim_requests · 
 notebooks/             0N_*.py (source of truth) and executed 0N_*.ipynb
 app/                   Streamlit demo (runs on the committed artifacts only)
 tests/                 cleaning rules on known-answer rows, estimators recovering known effects,
-                       optimizer guardrails, simulator, API
+                       optimizer guardrails, simulator, API, demo, document numbers vs records
 reports/               metrics/*.json · figures/ · decision memo · model card · brief · metric framework
 models/quote_model.json  the served artifact (versioned with the code)
 data/zones/            taxi-zone centroids and outlines (from the TLC shapefile)

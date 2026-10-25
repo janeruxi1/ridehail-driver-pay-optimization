@@ -39,7 +39,7 @@ quintile, predicted first-offer acceptance, completion probability and expected 
   margin −$0.04 per request in Brooklyn, where the policy deliberately spends margin to buy service;
   the change in p90 wait (−0.27 min, 95% interval −0.60 to +0.06) is within simulation noise
   (`reports/metrics/06_policy_simulation.json`).
-- Quote latency: about 1 ms p50, 1.5 ms p95 in-process.
+- Quote latency: about 1 ms per quote in-process (p95 under 1.5 ms on a laptop CPU).
 
 ## Constraints enforced in code
 
