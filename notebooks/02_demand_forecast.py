@@ -38,7 +38,7 @@ clusters = data.load_table("zone_clusters")
 use = clusters[clusters["cluster_name"] != "Sparse"]
 zone_cluster = dict(zip(use["zone"], use["cluster"]))
 cluster_name = dict(zip(use["cluster"], use["cluster_name"]))
-zh = con.sql("SELECT zone, hour, trips FROM zone_hour").df()
+zh = con.sql("SELECT zone, hour, trips FROM zone_hour ORDER BY zone, hour").df()
 panel = forecast.make_panel(zh, zones=list(zone_cluster))
 hourly_total = panel.trips.sum(axis=0)
 gaps = int((hourly_total == 0).sum())

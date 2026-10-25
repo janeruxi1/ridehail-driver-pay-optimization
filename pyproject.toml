@@ -14,7 +14,7 @@ dependencies = ["numpy>=1.26,<2.4", "pandas>=2.0,<3", "scipy>=1.11"]
 
 [project.optional-dependencies]
 api = ["fastapi>=0.110", "uvicorn>=0.29", "pydantic>=2"]
-data = ["pyarrow>=14", "duckdb>=1.0"]
+data = ["pyarrow>=14", "duckdb>=1.0,<3"]
 models = ["scikit-learn>=1.4", "lightgbm>=4.0", "statsmodels>=0.14", "pymc>=5.10", "arviz>=0.17",
           "holidays>=0.40", "matplotlib>=3.8", "pyshp>=2.3", "shapely>=2.0"]
 app = ["streamlit>=1.46", "plotly>=5.20", "matplotlib>=3.8"]

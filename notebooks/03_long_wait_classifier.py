@@ -76,6 +76,7 @@ df = con.sql(f"""
     LEFT JOIN zone_prev zp ON zp.zone = t.PULocationID AND zp.hour = date_trunc('hour', t.request_datetime)
     LEFT JOIN city_prev cp ON cp.hour = date_trunc('hour', t.request_datetime)
     WHERE t.wait_valid
+    ORDER BY ALL
 """).df()
 df["prev_trips"] = df["prev_trips"].fillna(0)             # no row = no trips in that zone that hour
 hol = forecast.holiday_dates(sorted(df["request_datetime"].dt.year.unique()))

@@ -231,11 +231,11 @@ pd.DataFrame({"point policy": point_in_draws, "robust policy": robust_in_draws})
 
 # %%
 req_all = pd.read_parquet(data.interim_dir() / "sim_requests.parquet")
-cents = con.sql("SELECT * FROM zones").df().set_index("zone")
+cents = con.sql("SELECT * FROM zones ORDER BY zone").df().set_index("zone")
 cents["radius_mi"] = np.sqrt(cents["area_sq_mi"] / np.pi)
 cents["in_area"] = cents["borough"] == "Brooklyn"
 prev = con.sql("""SELECT zone, hour + INTERVAL 1 HOUR AS hour, wait_sum_sec / NULLIF(wait_n, 0) / 60 AS prev_wait_min
-                  FROM zone_hour""").df()
+                  FROM zone_hour ORDER BY zone, hour""").df()
 req_all["hour_key"] = req_all["request_datetime"].dt.floor("h")
 req_all = req_all.merge(prev, left_on=["PULocationID", "hour_key"], right_on=["zone", "hour"], how="left")
 req_all["prev_wait_min"] = req_all["prev_wait_min"].fillna(req_all["prev_wait_min"].median())
@@ -398,6 +398,8 @@ rob, today = H.loc["Optimized (robust)"], H.loc["Today"]
 ep = effects.loc["Robust policy − today's pay"]
 em = effects.loc["Batched − greedy matching"]
 all_ok = bool(rob[["C3_wait", "C4_acceptance", "C5_earnings"]].all())
+GUARDS = ["C3_wait", "C4_acceptance", "C5_earnings"]
+GUARD_NAMES = {"C3_wait": "wait", "C4_acceptance": "acceptance", "C5_earnings": "earnings"}
 show_verdict(
     "Verdict: phase 6, pay policy and simulation",
     [
@@ -413,8 +415,13 @@ show_verdict(
         f"points of margin**: the point policy (best guess only) meets the wait guardrail in "
         f"{point_in_draws['C3_wait']:.0%}, acceptance in {point_in_draws['C4_acceptance']:.0%} and earnings in "
         f"{point_in_draws['C5_earnings']:.0%} of the {D} posterior draws the robust policy is built to satisfy (the robust "
-        f"policy meets all three in each of them by construction). Held out and scored against the truth, both policies "
-        f"meet all three. Cell premiums differ by {stability['mean_abs_diff_pts']:.1f} points on average across plausible "
+        f"policy meets all three in each of them by construction). Held out and scored against the truth, "
+        + ("both policies meet all three" if H.loc[["Optimized (point)", "Optimized (robust)"], GUARDS].all(axis=None)
+           else "the robust policy meets " + ("all three" if H.loc["Optimized (robust)", GUARDS].all() else "only "
+                + ", ".join(GUARD_NAMES[g] for g in GUARDS if H.loc["Optimized (robust)", g]))
+           + " and the point policy breaks the "
+           + " and ".join(GUARD_NAMES[g] for g in GUARDS if not H.loc["Optimized (point)", g]) + " guardrail")
+        + f". Cell premiums differ by {stability['mean_abs_diff_pts']:.1f} points on average across plausible "
         "worlds, so trust the policy at segment level, not cell by cell.",
         f"**In the dispatch simulation** (real Brooklyn requests; driver supply calibrated hour by hour to real waits; "
         f"untargeted p90 wait {check['sim p90'].mean():.1f} min simulated vs {check['real p90 (not targeted)'].mean():.1f} real), "

@@ -47,7 +47,7 @@ MONTHS = [m for m in ALL if "2024-07" <= m <= "2024-12"] or ALL[:6]
 TEST_MONTHS = MONTHS[-4:]
 trips, info = features.trip_frame(MONTHS, con)
 feats = simulate.difficulty_features(trips, info)
-cluster_wait = (con.sql("""SELECT zone, SUM(wait_sum_sec)/SUM(wait_n)/60 AS w FROM zone_hour GROUP BY 1""").df()
+cluster_wait = (con.sql("""SELECT zone, SUM(wait_sum_sec)/SUM(wait_n)/60 AS w FROM zone_hour GROUP BY 1 ORDER BY 1""").df()
                 .set_index("zone")["w"].groupby(info["cluster_name"]).mean().to_dict())
 print(f"{len(trips):,} real trips, {MONTHS[0]} to {MONTHS[-1]}; pay test in {TEST_MONTHS}")
 

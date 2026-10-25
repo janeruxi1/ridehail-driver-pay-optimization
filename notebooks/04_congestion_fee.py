@@ -48,7 +48,7 @@ exposure = con.sql(f"""
            SUM(CASE WHEN hour <  TIMESTAMP '{FEE_START}' THEN trips_cbd_fee END)
              / SUM(CASE WHEN hour <  TIMESTAMP '{FEE_START}' THEN trips END)      AS fee_share_before,
            SUM(trips) AS trips
-    FROM zone_hour JOIN zones USING (zone) GROUP BY ALL
+    FROM zone_hour JOIN zones USING (zone) GROUP BY ALL ORDER BY ALL
 """).df().set_index("zone")
 exposure["group"] = np.select(
     [exposure["fee_share_after"] >= 0.8, exposure["fee_share_after"] < 0.10],
@@ -90,11 +90,11 @@ weekly = con.sql("""
            CAST(hour AS DATE) - CAST((isodow(hour) % 7) AS INTEGER) AS week,     -- Sunday-start weeks
            SUM(trips) AS trips, SUM(wait_sum_sec) AS wait_sum_sec, SUM(wait_n) AS wait_n,
            SUM(miles) AS miles, SUM(trip_sec) AS trip_sec, SUM(driver_pay) AS driver_pay
-    FROM zone_hour GROUP BY ALL
+    FROM zone_hour GROUP BY ALL ORDER BY ALL
 """).df()
 weekly["week"] = pd.to_datetime(weekly["week"])
 days_in_week = con.sql("""SELECT CAST(hour AS DATE) - CAST((isodow(hour) % 7) AS INTEGER) AS week,
-                                 COUNT(DISTINCT CAST(hour AS DATE)) AS days FROM zone_hour GROUP BY 1""").df()
+                                 COUNT(DISTINCT CAST(hour AS DATE)) AS days FROM zone_hour GROUP BY 1 ORDER BY 1""").df()
 full_weeks = pd.to_datetime(days_in_week.loc[days_in_week["days"] == 7, "week"])
 weekly = weekly[weekly["week"].isin(full_weeks)].merge(exposure[["group"]], left_on="zone", right_index=True)
 weekly = weekly[weekly["trips"] >= 20]            # a zone-week needs enough trips for its averages to mean anything

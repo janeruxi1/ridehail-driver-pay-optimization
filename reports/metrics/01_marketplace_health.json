@@ -292,38 +292,38 @@
       {
         "k": 3,
         "silhouette": 0.262,
-        "stability_ari": 0.846,
+        "stability_ari": 0.838,
         "smallest_cluster": 19
       },
       {
         "k": 4,
-        "silhouette": 0.19,
-        "stability_ari": 0.693,
+        "silhouette": 0.187,
+        "stability_ari": 0.66,
         "smallest_cluster": 16
       },
       {
         "k": 5,
-        "silhouette": 0.197,
-        "stability_ari": 0.702,
+        "silhouette": 0.201,
+        "stability_ari": 0.742,
         "smallest_cluster": 16
       },
       {
         "k": 6,
-        "silhouette": 0.208,
-        "stability_ari": 0.733,
+        "silhouette": 0.211,
+        "stability_ari": 0.74,
         "smallest_cluster": 7
       },
       {
         "k": 7,
-        "silhouette": 0.175,
-        "stability_ari": 0.548,
+        "silhouette": 0.172,
+        "stability_ari": 0.577,
         "smallest_cluster": 4
       },
       {
         "k": 8,
-        "silhouette": 0.175,
-        "stability_ari": 0.521,
-        "smallest_cluster": 7
+        "silhouette": 0.202,
+        "stability_ari": 0.57,
+        "smallest_cluster": 3
       }
     ],
     "profile": [

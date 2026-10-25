@@ -24,9 +24,9 @@ tested in a dispatch simulation, a quote API in Docker with CI/CD, and a switchb
 | Will this request wait > 10 minutes? | LightGBM, ROC AUC **0.73**, calibrated; a cost-based threshold fixed in advance cuts expected cost 16%. | [03](notebooks/03_long_wait_classifier.ipynb) |
 | What did the 2025 congestion fee do? | Traffic in the zone got **0.65 mph faster (4.6%)**, robust to placebo dates. Pickups fell, but by 9% or about 1% depending on the design. Effects on waits and driver pay are **not** distinguishable from placebo noise. | [04](notebooks/04_congestion_fee.ipynb) |
 | How much does 10% more pay raise acceptance? | The history says +3.2 pp; the truth is +6.3 pp (premiums go to the trips drivers dislike). **Double ML** and the **randomized pay test** each recover their estimand; with a hidden confounder only the test does. | [05](notebooks/05_pay_to_accept.ipynb) |
-| What should we pay? | A robust MILP policy: **+2.8% margin per request** on held-out months, scored against the truth, with rider wait, acceptance and driver earnings guardrails all met. Cutting to the floor would "earn" +27% and break all three. | [06](notebooks/06_pay_policy_simulation.ipynb) |
-| Does it hold up with real requests and moving drivers? | In a dispatch simulation replaying the real Brooklyn requests of two days, the policy raises first-offer acceptance by 1.4 points and cuts the p90 wait by 0.36 min, at a cost of $0.11 of margin per request there (as the expected-value model predicts for Brooklyn). Batched matching cuts mean wait by 8.3 min vs greedy. | [06](notebooks/06_pay_policy_simulation.ipynb) |
-| How do we roll it out? | Switchback test: region × 2-hour blocks, first hour washed out, randomization inference; sized on real data: **8 weeks** to detect the expected effect. | [07](notebooks/07_switchback_design.ipynb) |
+| What should we pay? | A robust MILP policy: **+3.7% margin per request** on held-out months, scored against the truth, with rider wait, acceptance and driver earnings guardrails all met. Cutting to the floor would "earn" +27% and break all three. | [06](notebooks/06_pay_policy_simulation.ipynb) |
+| Does it hold up with real requests and moving drivers? | In a dispatch simulation replaying the real Brooklyn requests of two days, the policy raises first-offer acceptance by 1.3 points at a cost of $0.04 of margin per request there (the expected-value model predicts $0.11 for Brooklyn); its effect on waits is within simulation noise (p90 −0.27 min, 95% interval −0.60 to +0.06). Batched matching cuts mean wait by 8.5 min vs greedy. | [06](notebooks/06_pay_policy_simulation.ipynb) |
+| How do we roll it out? | Switchback test: region × 2-hour blocks, first hour washed out, randomization inference; sized on real data: **4 weeks** to detect the expected effect. | [07](notebooks/07_switchback_design.ipynb) |
 
 🎮 **[Try the live demo](https://janeruxi1-ridehail-driver-pay-optimization.streamlit.app/)**: quote a trip, explore where the policy puts premiums, and size the rollout test.
 
@@ -91,7 +91,7 @@ curl -X POST localhost:8000/quote -H 'content-type: application/json' \
 ```
 
 ```json
-{"model_version": "ridepay-1755353c0e", "floor_pay": 5.52, "recommended_pay": 6.62, "premium_pct": 20.0, "segment": "Core|night", "difficulty_quintile": 5, "accept_probability": 0.2788, "completion_probability": 0.8656, "expected_margin": 3.99, "rule": "policy"}
+{"model_version": "ridepay-dd0381e2ca", "floor_pay": 5.52, "recommended_pay": 6.62, "premium_pct": 20.0, "segment": "Core|night", "difficulty_quintile": 5, "accept_probability": 0.2822, "completion_probability": 0.8676, "expected_margin": 4.01, "rule": "policy"}
 ```
 
 A 0.8-mile trip at 2am from Crown Heights North that leaves the city, after an hour of long waits there, is in

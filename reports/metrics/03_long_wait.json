@@ -22,10 +22,10 @@
       "log loss": 0.2414
     },
     "LightGBM": {
-      "ROC AUC": 0.73486,
-      "PR AUC": 0.19601,
-      "Brier": 0.06365,
-      "log loss": 0.23676
+      "ROC AUC": 0.73537,
+      "PR AUC": 0.1977,
+      "Brier": 0.06364,
+      "log loss": 0.23664
     },
     "Base rate only": {
       "ROC AUC": 0.5,
@@ -34,7 +34,7 @@
       "log loss": 0.26651
     }
   },
-  "max_decile_calibration_gap": 0.013377617734935093,
+  "max_decile_calibration_gap": 0.015747299113050672,
   "costs": {
     "flag": 1.0,
     "miss": 8.0
@@ -44,16 +44,16 @@
   "policy_cost": {
     "Do nothing": 0.5875,
     "Flag every request": 1.0,
-    "Model, threshold 0.111 (fixed in advance)": 0.4942,
-    "Model, best threshold in hindsight (0.12)": 0.49419
+    "Model, threshold 0.111 (fixed in advance)": 0.49307,
+    "Model, best threshold in hindsight (0.12)": 0.49307
   },
-  "precision": 0.2006974660865114,
-  "recall": 0.4210632299637535,
-  "flagged_share": 0.15407138667205608,
+  "precision": 0.19172890424701816,
+  "recall": 0.4618069539535508,
+  "flagged_share": 0.17688436266125096,
   "sensitivity": [
     {
       "cost of a long wait": 4,
-      "best threshold": 0.28
+      "best threshold": 0.27
     },
     {
       "cost of a long wait": 8,
@@ -65,52 +65,52 @@
     }
   ],
   "feature_importance": {
-    "prev_wait_p90_min": 0.313,
-    "zone": 0.221,
-    "prev_wait_min": 0.191,
-    "shared_request": 0.072,
+    "prev_wait_p90_min": 0.309,
+    "zone": 0.228,
+    "prev_wait_min": 0.189,
+    "shared_request": 0.071,
     "hod": 0.053,
-    "prev_city_trips": 0.033,
+    "prev_city_trips": 0.034,
     "platform": 0.027,
     "trip_miles": 0.025,
     "prev_city_wait_min": 0.021,
     "prev_trips": 0.017
   },
-  "trees": 230,
+  "trees": 249,
   "by_cluster": [
     {
       "cluster_name": "Airports",
       "trips": 8062,
       "long_wait_rate": 0.19338,
-      "mean_pred": 0.18721,
-      "flagged": 0.60258
+      "mean_pred": 0.18561,
+      "flagged": 0.64599
     },
     {
       "cluster_name": "Commuter residential",
       "trips": 94680,
       "long_wait_rate": 0.0711,
-      "mean_pred": 0.06483,
-      "flagged": 0.12833
+      "mean_pred": 0.0647,
+      "flagged": 0.14966
     },
     {
       "cluster_name": "Core",
       "trips": 98879,
       "long_wait_rate": 0.06439,
-      "mean_pred": 0.06237,
-      "flagged": 0.13755
+      "mean_pred": 0.06248,
+      "flagged": 0.15986
     },
     {
       "cluster_name": "Long waits",
       "trips": 1244,
       "long_wait_rate": 0.19212,
-      "mean_pred": 0.17535,
-      "flagged": 0.5201
+      "mean_pred": 0.17187,
+      "flagged": 0.5619
     },
     {
       "cluster_name": "Sparse",
       "trips": 2,
       "long_wait_rate": 0.5,
-      "mean_pred": 0.0871,
+      "mean_pred": 0.08448,
       "flagged": 0.0
     }
   ]

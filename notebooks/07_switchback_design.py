@@ -42,7 +42,7 @@ reg = con.sql("""
            SUM(z.wait_n) AS wait_n
     FROM zone_hour z JOIN clusters c USING (zone)
     WHERE c.cluster_name NOT IN ('Sparse') AND z.hour >= (SELECT MAX(hour) FROM zone_hour) - INTERVAL 28 DAY
-    GROUP BY ALL
+    GROUP BY ALL ORDER BY ALL
 """).df()
 vol = reg.groupby("region")["trips"].sum()
 keep = vol[vol >= 20_000 * (0.02 if FAST else 1)].index          # regions with enough trips to run a test in

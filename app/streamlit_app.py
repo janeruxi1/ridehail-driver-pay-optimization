@@ -301,7 +301,7 @@ with tab_test:
     c1, c2, c3 = st.columns(3)
     lab = c1.selectbox("Design", list(labels), index=list(labels).index(default_label))
     effect = c2.slider("Effect to detect ($ margin per trip)", 0.05, 0.50, round(float(m7["expected_effect"]), 2), 0.01)
-    weeks = c3.slider("Weeks", 1, 16, 8)
+    weeks = c3.slider("Weeks", 1, 16, int(min(16, max(1, designs[chosen]["weeks_for_expected"]))))
     d = designs[labels[lab]]
     k1, k2, k3 = st.columns(3)
     k1.metric("Minimum detectable effect", f"${demo.switchback_mde(d['sd_randomization'], d['bias_share'], weeks):.3f}")

@@ -25,19 +25,20 @@ quintile, predicted first-offer acceptance, completion probability and expected 
    supply tightness in the last hour), with hour bands partially pooled within each zone cluster.
    **Acceptance decisions are simulated** (the public data doesn't record them), from a planted model,
    on real trips with their real pay. The model recovered the planted slopes (90% intervals cover the
-   truth in 18 of 20 segments) and predicts what a randomized pay test measured.
+   truth in 20 of 20 segments) and predicts what a randomized pay test measured.
 3. **Policy** (phase 6): one premium per cell (segment × difficulty quintile), chosen by mixed-integer
    programming to maximize expected margin with guardrails on rider wait (C3), first-offer acceptance
    (C4) and driver earnings per hour (C5), imposed under 20 posterior draws at once (robust version).
 
 ## Evaluation
 
-- Held out (April–June 2025 trips, scored against the planted truth): margin per request +2.8% vs
-  today's pay, with all guardrails met; the non-robust policy violated the wait guardrail in 80% of
-  the 20 posterior draws the robust policy is constrained to satisfy.
-- Dispatch simulation on two real days of Brooklyn requests: first-offer acceptance +1.4 points, p90
-  wait −0.36 min, margin −$0.11 per request in Brooklyn, where the policy deliberately spends margin
-  to buy service (`reports/metrics/06_policy_simulation.json`).
+- Held out (April–June 2025 trips, scored against the planted truth): margin per request +3.7% vs
+  today's pay, with all guardrails met; the non-robust policy violated the wait guardrail in 90% of
+  the 20 posterior draws the robust policy is constrained to satisfy, and on the held-out months too.
+- Dispatch simulation on two real days of Brooklyn requests: first-offer acceptance +1.3 points,
+  margin −$0.04 per request in Brooklyn, where the policy deliberately spends margin to buy service;
+  the change in p90 wait (−0.27 min, 95% interval −0.60 to +0.06) is within simulation noise
+  (`reports/metrics/06_policy_simulation.json`).
 - Quote latency: about 1 ms p50, 1.5 ms p95 in-process.
 
 ## Constraints enforced in code

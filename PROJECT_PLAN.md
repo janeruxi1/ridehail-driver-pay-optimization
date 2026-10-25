@@ -57,3 +57,11 @@ Each phase ends with an executed notebook (ending in a verdict), a JSON record o
 - No pay personalization by driver (constraint C2).
 - Long-run driver supply growth and strategic driver behaviour: flagged, watched in the rollout test.
 - The TLC records combine several app companies; treated as one marketplace, stated as a simplification.
+
+## Changes after this plan was written
+
+- **Reproducible row order.** Several DuckDB queries had no `ORDER BY`, so rows could come back in a
+  different order on each run; the simulation draws one random number per trip, and k-means and
+  LightGBM also see rows in order, so reruns could differ slightly. Every query whose order matters now
+  sorts its result, two runs produce identical records, and every notebook was re-run on the real data
+  after the change.

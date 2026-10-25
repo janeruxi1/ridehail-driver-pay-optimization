@@ -211,9 +211,9 @@ zone_stats = con.sql("""
                SUM(trips)                                             AS trips
         FROM zone_hour GROUP BY zone)
     SELECT z.*, zones.zone_name, zones.borough
-    FROM z JOIN zones USING (zone)
+    FROM z JOIN zones USING (zone) ORDER BY zone
 """).df().set_index("zone")
-days = con.sql("SELECT COUNT(DISTINCT CAST(hour AS DATE)) FROM zone_hour").fetchone()[0]
+days = con.sql("SELECT COUNT(DISTINCT CAST(hour AS DATE)) FROM zone_hour").fetchall()[0][0]
 
 borough = con.sql("""
     SELECT zones.borough,
@@ -253,7 +253,7 @@ imbalance = con.sql("""
     WITH arrivals AS (SELECT do_zone AS zone, SUM(trips) AS dropoffs FROM od_hour GROUP BY 1),
          departures AS (SELECT pu_zone AS zone, SUM(trips) AS pickups FROM od_hour GROUP BY 1)
     SELECT zone, dropoffs, pickups, dropoffs / pickups AS arrivals_per_pickup
-    FROM arrivals JOIN departures USING (zone)
+    FROM arrivals JOIN departures USING (zone) ORDER BY zone
 """).df().set_index("zone")
 zone_stats = zone_stats.join(imbalance["arrivals_per_pickup"])
 print("Zones where drivers pile up (20+ pickups a day, most drop-offs per pickup):")
@@ -289,7 +289,7 @@ shape = con.sql("""
            SUM(CASE WHEN hour(hour) BETWEEN 16 AND 19 THEN trips END) / SUM(trips)  AS share_pm_peak,
            SUM(CASE WHEN hour(hour) >= 20 THEN trips END) / SUM(trips)              AS share_evening,
            SUM(CASE WHEN isodow(hour) >= 6 THEN trips END) / SUM(trips)             AS share_weekend
-    FROM zone_hour GROUP BY zone
+    FROM zone_hour GROUP BY zone ORDER BY zone
 """).df().set_index("zone").fillna(0)
 feats = zone_stats.join(shape)
 feats["log_trips"] = np.log10(feats["trips_per_day"])

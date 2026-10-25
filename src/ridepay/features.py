@@ -15,7 +15,7 @@ def zone_info(con=None) -> pd.DataFrame:
     info = con.sql("""
         WITH a AS (SELECT do_zone AS zone, SUM(trips) AS dropoffs FROM od_hour GROUP BY 1),
              d AS (SELECT pu_zone AS zone, SUM(trips) AS pickups FROM od_hour GROUP BY 1)
-        SELECT zone, dropoffs / pickups AS arrivals_per_pickup FROM a JOIN d USING (zone)
+        SELECT zone, dropoffs / pickups AS arrivals_per_pickup FROM a JOIN d USING (zone) ORDER BY zone
     """).df().set_index("zone")
     clusters = data.load_table("zone_clusters").set_index("zone")
     return clusters[["cluster", "cluster_name", "borough"]].join(info)
@@ -35,6 +35,7 @@ def trip_frame(months: list[str] | None = None, con=None) -> pd.DataFrame:
         FROM trips t
         LEFT JOIN zone_prev zp ON zp.zone = t.PULocationID AND zp.hour = date_trunc('hour', t.request_datetime)
         {where}
+        ORDER BY ALL
     """).df()
     info = zone_info(con)
     df["cluster_name"] = df["PULocationID"].map(info["cluster_name"]).fillna("Sparse")
