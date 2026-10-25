@@ -80,13 +80,13 @@ def test_pay_test_never_goes_below_the_floor():
     assert 0.05 < sim["in_test"].mean() < 0.11
 
 
-def small_table():
+def small_table(today_multiple: float = 1.1):
     """Two cells; cell 0 responds strongly to pay, cell 1 barely."""
     rng = np.random.default_rng(0)
     n = 400
     df = pd.DataFrame({"cell": np.repeat(["A|midday|q1", "A|midday|q5"], n), "cluster_name": "A", "band": "midday",
                        "floor": 10.0, "fare": 16.0, "minutes": 15.0})
-    df["offer_sq"] = df["floor"] * 1.1
+    df["offer_sq"] = df["floor"] * today_multiple
     sens = np.where(df["cell"].str.endswith("q1"), 8.0, 0.5)
 
     def fn(d, lr, _):
@@ -105,3 +105,14 @@ def test_optimizer_respects_guardrails_and_beats_today():
     prem = policy.PREMIUMS[choice]
     assert prem.max() <= 0.30 + 1e-9 and prem.min() >= 0
     assert prem[0] > prem[1]          # the pay-sensitive cell gets the bigger premium
+
+
+def test_optimizer_returns_least_violating_policy_when_no_policy_meets_every_guardrail():
+    # today pays 1.5x the floor, above the 1.3x cap, so no premium option matches today's acceptance (C4)
+    t = small_table(today_multiple=1.5)
+    with pytest.raises(RuntimeError, match="infeasible"):
+        policy.optimize(t, relax_if_infeasible=False)
+    choice, res = policy.optimize(t)
+    assert res.relaxed and res.violation > 0
+    assert not policy.guardrails(t, choice)["C4_acceptance"]
+    assert (policy.PREMIUMS[choice] == policy.PREMIUMS.max()).all()   # the closest it can get: the cap

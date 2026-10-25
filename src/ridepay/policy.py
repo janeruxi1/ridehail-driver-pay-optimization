@@ -90,9 +90,15 @@ def cell_table(df: pd.DataFrame, accept_fn, draws: list) -> CellTable:
     return CellTable(cells, sums, sq)
 
 
-def optimize(t: CellTable, constraint_draws=None, objective_draws=None, time_limit: float = 120):
+def optimize(t: CellTable, constraint_draws=None, objective_draws=None, time_limit: float = 120,
+             relax_if_infeasible: bool = True):
     """Solve the MILP. Objective: mean margin over ``objective_draws``; constraints in each of
-    ``constraint_draws`` (indices into the table's draws). Returns chosen premium index per cell."""
+    ``constraint_draws`` (indices into the table's draws). Returns chosen premium index per cell.
+
+    Today's offers are not on the premium grid, so no grid policy is guaranteed to meet every
+    guardrail. If none does, the policy that breaks the guardrails least (summed relative shortfall)
+    is returned instead, with ``res.relaxed = True`` and the shortfall in ``res.violation``; the
+    guardrails are always checked separately when the policy is scored."""
     D, C, K = t.sums["margin"].shape
     constraint_draws = list(range(D)) if constraint_draws is None else list(constraint_draws)
     objective_draws = list(range(D)) if objective_draws is None else list(objective_draws)
@@ -129,12 +135,44 @@ def optimize(t: CellTable, constraint_draws=None, objective_draws=None, time_lim
             A.append(row.ravel())
             lo.append(-1e-6)
             hi.append(np.inf)
-    res = milp(c, constraints=LinearConstraint(np.array(A), lo, hi), integrality=np.ones(nvar),
-               bounds=Bounds(0, 1), options={"time_limit": time_limit, "disp": False})
+    A, lo, hi = np.array(A), np.array(lo), np.array(hi)
+    options = {"time_limit": time_limit, "disp": False}
+    res = milp(c, constraints=LinearConstraint(A, lo, hi), integrality=np.ones(nvar), bounds=Bounds(0, 1),
+               options=options)
+    res.relaxed, res.violation = False, 0.0
     if res.x is None:
-        raise RuntimeError(f"optimizer failed: {res.message}")
-    choice = res.x.reshape(C, K).argmax(axis=1)
+        if not relax_if_infeasible or res.status != 2:          # 2: infeasible; anything else is a real failure
+            raise RuntimeError(f"optimizer failed: {res.message}")
+        res = _least_violation(c, A, lo, hi, n_hard=C, options=options)
+    choice = res.x[:nvar].reshape(C, K).argmax(axis=1)
     return choice, res
+
+
+def _least_violation(c, A, lo, hi, n_hard: int, options: dict):
+    """Elastic version of the MILP: one slack per guardrail row (the first ``n_hard`` rows, one option
+    per cell, stay hard). Stage 1 minimizes the summed relative shortfall; stage 2 maximizes margin
+    among policies with that shortfall."""
+    m, nvar = A.shape[0] - n_hard, A.shape[1]
+    upper = np.isfinite(hi[n_hard:])                               # rows of the form a·x <= hi
+    bound = np.where(upper, hi[n_hard:], lo[n_hard:])
+    scale = np.maximum(np.abs(bound), 1.0)
+    S = np.zeros((A.shape[0], m))
+    S[n_hard + np.arange(m), np.arange(m)] = np.where(upper, -1.0, 1.0)
+    A2 = np.hstack([A, S])
+    integrality = np.r_[np.ones(nvar), np.zeros(m)]
+    bounds = Bounds(np.zeros(nvar + m), np.r_[np.ones(nvar), np.full(m, np.inf)])
+    w = np.r_[np.zeros(nvar), 1 / scale]
+    stage1 = milp(w, constraints=LinearConstraint(A2, lo, hi), integrality=integrality, bounds=bounds,
+                  options=options)
+    if stage1.x is None:
+        raise RuntimeError(f"optimizer failed: {stage1.message}")
+    cap = stage1.fun * (1 + 1e-6) + 1e-9
+    stage2 = milp(np.r_[c, np.zeros(m)], constraints=[LinearConstraint(A2, lo, hi), LinearConstraint(w, -np.inf, cap)],
+                  integrality=integrality, bounds=bounds, options=options)
+    res = stage2 if stage2.x is not None else stage1
+    res.relaxed, res.violation = True, float(stage1.fun)
+    res.message = f"no policy meets every guardrail; least total shortfall {stage1.fun:.4f} ({res.message})"
+    return res
 
 
 def summarize(t: CellTable, choice, draw: int = 0) -> dict:
