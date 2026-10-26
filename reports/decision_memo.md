@@ -72,6 +72,8 @@ switchback test** before full rollout.
 
 - **Waits are longest around 4am on Sundays, not at rush hour**: target pay by supply–demand balance, not volume.
 - **The congestion fee** made traffic in the zone ~5% faster; its effect on driver pay per trip is not
-  measurable with the data available. Don't book one.
+  measurable with the data available. Don't book one. (A fuller study with two pre-toll years,
+  `nyc-congestion-toll-causal-impact`, finds no detectable change in trips in the zone once their pre-toll decline is
+  allowed for.)
 - **Demand forecasts:** about half of the zone × hour error is irreducible noise; plan supply at
   cluster × hour (error 6.7%).
