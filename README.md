@@ -22,7 +22,7 @@ tested in a dispatch simulation, a quote API in Docker with CI/CD, and a switchb
 | Where is the marketplace under strain? | Waits track the supply–demand *balance*, not demand: the longest are around 4am on Sundays (correlation with hourly trips -0.15). Zones fall into 3 stable clusters plus airports. | [01](notebooks/01_marketplace_health.ipynb) |
 | How many trips next month, by zone and hour? | Weighted MAPE **12.7%** at zone × hour vs 13.4% (4-week mean) and 16.4% (seasonal naive); Poisson noise alone would give 6.8%. | [02](notebooks/02_demand_forecast.ipynb) |
 | Will this request wait > 10 minutes? | LightGBM, ROC AUC **0.735**, calibrated; a cost-based threshold fixed in advance cuts expected cost 16%. | [03](notebooks/03_long_wait_classifier.ipynb) |
-| What did the 2025 congestion fee do? | Traffic in the zone got **0.65 mph faster (4.6%)**, robust to placebo dates. Pickups fell, but by 9% or about 1% depending on the design. Effects on waits and driver pay are **not** distinguishable from placebo noise. A fuller study in [`nyc-congestion-toll-causal-impact`](https://github.com/janeruxi1/nyc-congestion-toll-causal-impact) settles the size: the gap is a decline that started in 2023, and allowing for it, trips show no detectable change. | [04](notebooks/04_congestion_fee.ipynb) |
+| What did the 2025 congestion fee do? | Traffic in the zone got **0.65 mph faster (4.6%)**, robust to placebo dates. Pickups fell, but by 9% or about 1% depending on the design. Effects on waits and driver pay per trip are **not** distinguishable from placebo noise. A fuller study in [`nyc-congestion-toll-causal-impact`](https://github.com/janeruxi1/nyc-congestion-toll-causal-impact) settles the size: the gap is a decline that started in 2023, and allowing for it, trips show no detectable change. | [04](notebooks/04_congestion_fee.ipynb) |
 | How much does 10% more pay raise acceptance? | The history says +3.2 pp; the truth is +6.3 pp (premiums go to the trips drivers dislike). **Double ML** and the **randomized pay test** each recover their estimand; with a hidden confounder only the test does. | [05](notebooks/05_pay_to_accept.ipynb) |
 | What should we pay? | A robust MILP policy: **+3.7% margin per request** on held-out months, scored against the truth, with rider wait, acceptance and driver earnings guardrails all met. Cutting to the floor would "earn" +27% and break all three. | [06](notebooks/06_pay_policy_simulation.ipynb) |
 | Does it hold up with real requests and moving drivers? | In a dispatch simulation replaying the real Brooklyn requests of two days, the policy raises first-offer acceptance by 1.3 points at a cost of $0.04 of margin per request there (the expected-value model predicts $0.11 for Brooklyn); its effect on waits is within simulation noise (p90 −0.27 min, 95% interval −0.60 to +0.06). Batched matching cuts mean wait by 8.5 min vs greedy. | [06](notebooks/06_pay_policy_simulation.ipynb) |
@@ -159,8 +159,9 @@ and switchback-style tests carry over directly.
 the open question from notebook 04. It adds yellow taxis, two pre-toll years and data to August 2026,
 and three methods that account for the zone's pre-toll decline (difference-in-differences with zone
 trends, a forecast counterfactual and synthetic control). It confirms the faster traffic, finds no
-detectable change in trips, and finds Uber/Lyft driver pay per hour on a trip in the zone up about
-3% and shared-ride requests down about 13%. This project designs pay; that one measures a policy.
+detectable change in trips, and, measuring per hour rather than per trip, finds Uber/Lyft driver pay
+per hour on a trip in the zone up about 3%; shared-ride requests fell about 13% (figures from that
+project's own records). This project designs pay; that one measures a policy.
 
 ## License and data
 
