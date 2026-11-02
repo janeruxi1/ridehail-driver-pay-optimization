@@ -28,6 +28,13 @@
 # Then a **Bayesian hierarchical model** gives the curve for each segment (zone cluster × hour
 # band) with uncertainty, pooling small segments toward the average.
 
+
+# %% [markdown]
+# | | |
+# |---|---|
+# | **Answer in short** | Reading the history naively credits pay with only half of its true effect, because premiums go to the trips drivers like least. Double machine learning and a randomized pay test both recover the truth (planted in this semi-synthetic setup), and a hierarchical model gives each segment its own pay sensitivity. |
+# | **Next** | [Notebook 06](06_pay_policy_simulation.ipynb) turns this into a pay policy and tests it in simulation. |
+
 # %%
 import time
 
@@ -147,6 +154,10 @@ ax.set(title="Effect of log pay on acceptance probability", xlabel="estimate (95
 ax.legend(loc="lower right")
 data.savefig(fig, "05_estimates")
 
+
+# %% [markdown]
+# **How to read the figure.** Each row is one way of estimating the effect of pay on acceptance, with its 95% interval; the vertical line is the true value planted in the data. Methods whose interval covers the line recover the truth; the naive one misses it by a wide margin.
+
 # %% [markdown]
 # ## When DML fails: a confounder we can't see
 #
@@ -255,6 +266,10 @@ ax.set_xticks(o.index, [f"{c[:10]}·{b}" for c, b in zip(o["cluster"], o["band"]
 ax.set(title="Pay sensitivity β by segment", ylabel="β (log-odds per unit log pay)")
 ax.legend(fontsize=7)
 data.savefig(fig, "05_segment_slopes")
+
+
+# %% [markdown]
+# **How to read the figure.** For each driver segment, the pay sensitivity estimated separately ("no pooling", jumpy for small segments) and by the hierarchical model (90% interval), against the truth. The hierarchical estimates are closer to the truth because small segments borrow strength from the rest.
 
 # %% [markdown]
 # **Posterior predictive check**: simulate acceptance from the fitted model and compare with the

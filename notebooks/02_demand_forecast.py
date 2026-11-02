@@ -21,6 +21,13 @@
 # * Metrics: weighted MAPE (Σ|error| ÷ Σ trips) and bias, at the zone × hour level and at the
 #   coarser levels planning actually uses (zone × day, cluster × hour).
 
+
+# %% [markdown]
+# | | |
+# |---|---|
+# | **Answer in short** | A LightGBM model forecasts trips per zone and hour four weeks ahead with 12.7% weighted error, beating seasonal naive (16.4%) and a four-week average (13.4%). Most of the remaining error is unavoidable noise in hourly counts; at the levels planning uses, the error is about 7%. |
+# | **Next** | [Notebook 03](03_long_wait_classifier.ipynb) predicts which requests will wait too long. |
+
 # %%
 import time
 
@@ -196,6 +203,10 @@ axes[1].legend()
 fig.tight_layout()
 data.savefig(fig, "02_forecast_backtest")
 by_cluster.round(4)
+
+
+# %% [markdown]
+# **How to read the figure.** Left: forecast error (weighted MAPE, lower is better) by how many weeks ahead the forecast is, for the model and the baselines; the model's error barely grows from week 1 to week 4. Right: citywide trips in the first week of the last test window, actual against forecasts; the model follows the daily rhythm closely.
 
 # %% [markdown]
 # ## Holidays: where a calendar-aware model earns its keep

@@ -23,6 +23,13 @@
 # **Caveat.** The data contains completed trips only. Riders who cancelled after a long wait are
 # missing, so the true long-wait rate is higher than measured here.
 
+
+# %% [markdown]
+# | | |
+# |---|---|
+# | **Answer in short** | At the moment of a request, a calibrated LightGBM model can flag trips likely to wait more than 10 minutes (ROC AUC 0.735). With a threshold set from costs fixed in advance, it flags about 18% of requests and catches 46% of long waits. |
+# | **Next** | [Notebook 04](04_congestion_fee.ipynb) measures what New York's congestion fee did. |
+
 # %%
 import lightgbm as lgb
 import numpy as np
@@ -178,6 +185,10 @@ cal_dev = (pd.DataFrame({"p": scores["LightGBM"], "y": y}).groupby(pd.qcut(score
            .mean().pipe(lambda d: (d["p"] - d["y"]).abs().max()))
 print(f"largest decile gap between predicted and observed (LightGBM): {cal_dev:.3%}")
 
+
+# %% [markdown]
+# **How to read the figure.** Left: predicted against observed long-wait rates on the test months, in tenths; points on the diagonal mean the probabilities can be used directly in the cost calculation. Right: precision–recall; moving right catches more long waits, at the price of more false alarms.
+
 # %% [markdown]
 # ## Choosing the threshold by cost, not by accuracy
 #
@@ -223,6 +234,10 @@ ax.text(grid[-1], C_MISS * y.mean(), "do nothing", ha="right", va="bottom", font
 ax.set(title="Expected cost per request vs threshold (test months)", xlabel="threshold", ylabel="$ per request")
 data.savefig(fig, "03_threshold_cost")
 policy.round(4)
+
+
+# %% [markdown]
+# **How to read the figure.** The expected cost per request (interventions plus long waits not caught) at each flagging threshold. The lowest point is the best threshold in hindsight; the rule chosen in advance from the costs lands right next to it.
 
 # %%
 sens

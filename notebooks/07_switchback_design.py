@@ -24,6 +24,13 @@
 # vary from block to block. This notebook uses the real zone × hour table for the last four weeks
 # of data, plants a known effect, and measures power by simulation.
 
+
+# %% [markdown]
+# | | |
+# |---|---|
+# | **Answer in short** | Test the new pay policy with a switchback: randomize regions by 2-hour blocks, dropping the first hour of each block to avoid carry-over. Four weeks can detect an effect of about $0.21 margin per trip, which is the size the policy is expected to deliver. Analyse with randomization inference, because the usual clustered errors give 11% false positives. |
+# | **Next** | Back to the [README](../README.md) or the [decision memo](../reports/decision_memo.md). |
+
 # %%
 import numpy as np
 import pandas as pd
@@ -181,6 +188,10 @@ ax.set(title="Power of a 4-week switchback (real block-to-block variation)", xla
 ax.legend()
 data.savefig(fig, "07_switchback_power")
 print("chosen design:", choice)
+
+
+# %% [markdown]
+# **How to read the figure.** Each curve is a design (block length, with or without a wash-out hour); the height is the chance a four-week test detects a true effect of that size. Where a curve crosses 80% is that design's minimum detectable effect; the chosen design (green) reaches it at about the effect the policy is expected to have (vertical line). Shorter blocks have more power, but without a wash-out hour they under-state the effect, because drivers' behaviour carries over from one block to the next.
 
 # %% [markdown]
 # ## Guardrail: can the test see a change in waits?

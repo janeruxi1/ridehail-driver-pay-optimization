@@ -25,6 +25,13 @@
 # * **Placebo tests**: pretend the fee started on dates in 2024 when nothing happened; the estimate
 #   should be zero.
 
+
+# %% [markdown]
+# | | |
+# |---|---|
+# | **Answer in short** | Inside the fee zone, traffic got faster (about +0.65 mph, +4.6%), robust to placebo dates. Pickups fell relative to other zones, but part of that gap was already there before the fee, so the size is uncertain. A key lesson: standard zone-clustered errors flag 82% of fake 2024 start dates as significant, so every result is judged against placebo dates instead. |
+# | **Next** | [Notebook 05](05_pay_to_accept.ipynb) estimates how driver acceptance responds to pay. |
+
 # %%
 import numpy as np
 import pandas as pd
@@ -63,6 +70,10 @@ data.savefig(fig, "04_fee_exposure")
 print(f"fee share before the start date: max {exposure['fee_share_before'].max():.4f} (should be ~0)")
 exposure.groupby("group").agg(zones=("zone_name", "size"), trips_m=("trips", lambda s: s.sum() / 1e6),
                               mean_fee_share=("fee_share_after", "mean")).round(3)
+
+
+# %% [markdown]
+# **How to read the figure.** For each zone, the share of pickups charged the fee after 5 January 2025. Zones split cleanly into almost-always (treated) and almost-never (control); the few in between are used for the dose–response check.
 
 # %%
 treated = exposure[exposure["group"] == "treated"]
@@ -144,6 +155,10 @@ axes[0, 0].legend()
 fig.tight_layout()
 data.savefig(fig, "04_gap_by_year")
 
+
+# %% [markdown]
+# **How to read the figure.** Each panel is one outcome; each line is a year, showing treated zones minus control zones by week of the year. If the fee had an effect, the 2025 line should break away from the earlier years after week 1 (the vertical line).
+
 # %% [markdown]
 # ## Event study
 #
@@ -182,6 +197,10 @@ for ax, (c, r) in zip(axes.ravel(), es.items()):
 fig.autofmt_xdate()
 fig.tight_layout()
 data.savefig(fig, "04_event_study")
+
+
+# %% [markdown]
+# **How to read the figure.** The estimated difference between treated and control zones each week, relative to January–June 2024, for four outcomes. A flat line before the fee and a jump after it is what a clean effect looks like; drift before the fee is a warning that the comparison is not like for like.
 
 # %% [markdown]
 # ## Main estimate: year-over-year difference-in-differences
@@ -279,6 +298,10 @@ axes[0].legend(fontsize=7, loc="lower left")
 fig.suptitle("Windowed DiD estimates: real start date vs placebo dates", fontsize=10)
 fig.tight_layout()
 data.savefig(fig, "04_placebo_ranks")
+
+
+# %% [markdown]
+# **How to read the figure.** The same estimate repeated with fake start dates in 2024, when nothing happened, against the real start date. A real effect should sit outside the cloud of fake ones; this is the yardstick used instead of the too-optimistic standard errors.
 
 # %% [markdown]
 # ## Dose–response: partly exposed zones

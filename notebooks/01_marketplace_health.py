@@ -19,6 +19,13 @@
 # 7. Clustering zones into groups that behave alike
 # 8. Verdict
 
+
+# %% [markdown]
+# | | |
+# |---|---|
+# | **Answer in short** | The data is clean (99.88% of 360 million trips kept). Driver pay sits on the city's minimum-pay floor for most trips, so the premium above the floor is the lever to price. Rider waits are longest when drivers are scarce (late at night), not at demand peaks. |
+# | **Next** | [Notebook 02](02_demand_forecast.ipynb) forecasts demand by zone and hour. |
+
 # %%
 import numpy as np
 import pandas as pd
@@ -162,6 +169,10 @@ fig.tight_layout()
 data.savefig(fig, "01_health_by_month")
 record["health_month"] = health_month.round(4).reset_index().to_dict(orient="records")
 
+
+# %% [markdown]
+# **How to read the figure.** Three monthly series for the whole city: trips per day, mean rider wait, and the drivers' share of what riders pay. Look for trends and seasonal swings before comparing any later period with an earlier one.
+
 # %% [markdown]
 # ## 4. The weekly rhythm
 #
@@ -192,6 +203,10 @@ record["weekly"] = {"corr_trips_wait": corr, "peak_wait_min": float(peak_wait["w
                     "min_wait_min": float(how["wait_min"].min())}
 print(f"correlation of hourly trips and wait: {corr:.2f}; longest mean wait {peak_wait['wait_min']:.1f} min "
       f"(day {int(peak_wait['dow'])}, {int(peak_wait['hod'])}:00)")
+
+
+# %% [markdown]
+# **How to read the figure.** Each point is one hour of the week, Monday to Sunday. Top: trips per hour; bottom: mean rider wait. The two peaks do not line up: waits are longest in the early-morning hours when few drivers are working, which is why the pay lever should target supply, not demand.
 
 # %% [markdown]
 # ## 5. Where riders wait
@@ -240,6 +255,10 @@ axes[1].set_title("Mean rider wait (zones with 20+ trips a day)")
 fig.tight_layout()
 data.savefig(fig, "01_zone_maps")
 record["borough"] = borough.round(4).reset_index().to_dict(orient="records")
+
+
+# %% [markdown]
+# **How to read the figure.** Left: pickups per day by taxi zone (log scale), concentrated in Manhattan and the airports. Right: mean rider wait by zone, for zones with at least 20 trips a day; the longest waits are in the outer parts of the city, where drivers are sparse.
 
 # %% [markdown]
 # ## 6. Where drivers end up
@@ -402,6 +421,10 @@ ax.legend(handles=[Patch(color=color_of[c], label=f"{names[c]} ({profile.loc[c, 
           loc="upper left", fontsize=8)
 ax.set_title(f"Zone clusters (k = {K})")
 data.savefig(fig, "01_zone_clusters")
+
+
+# %% [markdown]
+# **How to read the figure.** Each colour is a group of zones that behave alike (by volume, waits and the daily rhythm), chosen by a rule fixed before looking. Airports and very sparse zones are set aside by rule. Later notebooks set pay by these clusters.
 
 # %%
 _ = data.save_table(clusters.reset_index(), "zone_clusters")

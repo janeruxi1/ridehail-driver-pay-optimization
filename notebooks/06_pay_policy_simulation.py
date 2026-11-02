@@ -15,6 +15,13 @@
 # and a Saturday) through a dispatch simulator: simulated drivers, real requests. Compare today's pay
 # with the policy, and greedy matching with batched optimal matching.
 
+
+# %% [markdown]
+# | | |
+# |---|---|
+# | **Answer in short** | A robust pay policy, built to meet the guardrails across many plausible versions of the pay-response model, raises margin per request by 3.7% on held-out months with acceptance, waits and driver earnings all within their guardrails. Paying only the floor looks cheapest but breaks the guardrails. |
+# | **Next** | [Notebook 07](07_switchback_design.ipynb) designs the experiment to test it live. |
+
 # %%
 import time
 
@@ -195,6 +202,10 @@ for ax, h, title in [(axes[0], heat_today, "Today: average premium"), (axes[1], 
 fig.colorbar(im, ax=axes, shrink=0.6, label="premium over the floor")
 data.savefig(fig, "06_premium_map")
 
+
+# %% [markdown]
+# **How to read the figure.** Rows are zone clusters and times of day; columns are trip difficulty, from easiest (q1) to hardest (q5). The colour is the premium above the floor: today's average on the left, the robust policy's on the right. Outside the airports, the policy pays nothing above the floor on the easiest trips and concentrates the premium on the hardest ones (q4–q5), where it changes acceptance most.
+
 # %% [markdown]
 # ## How stable is the recommendation?
 #
@@ -328,6 +339,10 @@ data.savefig(fig, "06_sim_validation")
 check = pd.DataFrame(check).set_index("day")
 corr = check["hourly corr"].to_dict()
 check.round(2)
+
+
+# %% [markdown]
+# **How to read the figure.** Mean rider wait by hour on sample days, real against simulated under today's pay. The simulator is only trusted to compare policies because it reproduces the real pattern under today's pay.
 
 # %% [markdown]
 # **The experiments**: today's pay vs the robust policy, crossed with greedy vs batched matching, on
