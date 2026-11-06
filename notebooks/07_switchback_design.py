@@ -95,7 +95,7 @@ rng = np.random.default_rng(7)
 def assign(df, block_h):
     """A random balanced schedule: within each region and day, a random half of the blocks are treated."""
     d = df.copy()
-    d["block"] = d["hour"].dt.hour // block_h
+    d["block"] = (d["hour"].dt.hour // block_h).astype("int64")   # dt.hour is int32; some pandas builds can't merge on it
     blocks = d[["region", "day", "block"]].drop_duplicates()
     blocks["u"] = rng.random(len(blocks))
     blocks["rank"] = blocks.groupby(["region", "day"])["u"].rank()

@@ -130,6 +130,12 @@ with tab_rec:
     for col, (g, (name, desc)) in zip(cols, GUARDS.items()):
         ok = bool(rob[g])
         col.markdown(f"{'✅' if ok else '❌'} **{name}**  \n{desc}")
+    slips = m6.get("held_wait_slips", {}).get("Optimized (robust)", [])
+    if not rob["C3_wait"] and slips:
+        worst = slips[0]
+        st.caption(f"Held out, rider wait is at or below today in {20 - len(slips)} of 20 segments; it slips in "
+                   f"{len(slips)}, worst {worst['cluster']} {worst['band'].replace('_', ' ')} "
+                   f"({worst['wait_today_sec']:.1f} → {worst['wait_policy_sec']:.1f} s of extra wait per trip).")
 
     left, right = st.columns([3, 2], gap="large")
     with left:
@@ -154,7 +160,8 @@ with tab_rec:
             f"more, but meets the wait guardrail in only {m6['guardrails_in_draws']['point']['C3_wait']:.0%} of 20 "
             f"plausible versions of the acceptance model. {held_note}\n"
             "- **The robust policy** must meet all guardrails in all 20 versions at once: the margin it gives up is "
-            "insurance against the model being wrong.")
+            "insurance against the model's uncertainty. It cannot cover an error every version shares, which is "
+            "why the rollout test still reads each guardrail by segment.")
 
     with st.expander("Full comparison table"):
         rows = []

@@ -146,9 +146,37 @@ held_summary.round(4)
 
 # %% [markdown]
 # **Reading.** Floor-only saves the most pay per trip but breaks the guardrails: acceptance falls,
-# riders wait and some give up. The optimized policies keep the guardrails and still raise margin,
-# because they **move** premium: away from cells where drivers barely respond to it (or accept anyway)
-# toward cells where a little more pay buys much faster acceptance.
+# riders wait and some give up. The optimized policies raise margin and acceptance together, because they
+# **move** premium: away from cells where drivers barely respond to it (or accept anyway) toward cells where
+# a little more pay buys much faster acceptance. The wait guardrail (C3) is checked in each of the 20
+# segments, with no tolerance, so the next cell shows where it slips and by how much.
+
+# %%
+def wait_by_segment(choice):
+    """Extra wait per completed trip by segment on the held-out months: policy vs today."""
+    C = len(held_table.cells)
+    S = {k: v[0, np.arange(C), choice] for k, v in held_table.sums.items()}
+    Q = {k: v[0] for k, v in held_table.status_quo.items()}
+    rows = []
+    for (cl, band), i in held_table.cells.groupby(["cluster_name", "band"]).indices.items():
+        today_s, pol_s = Q["extra_wait_sec"][i].sum(), S["extra_wait_sec"][i].sum()
+        rows.append({"cluster": cl, "band": band, "completed": float(Q["complete"][i].sum()),
+                     "wait_today_sec": today_s / Q["complete"][i].sum(), "wait_policy_sec": pol_s / S["complete"][i].sum(),
+                     "total_change_pct": 100 * (pol_s / today_s - 1)})
+    return pd.DataFrame(rows).sort_values("total_change_pct", ascending=False).reset_index(drop=True)
+
+
+wait_seg = {name: wait_by_segment(policies[name]) for name in ["Optimized (point)", "Optimized (robust)"]}
+wait_slips = {name: t.loc[t["total_change_pct"] > 0] for name, t in wait_seg.items()}
+for name, t in wait_slips.items():
+    print(f"{name}: wait above today in {len(t)} of {len(wait_seg[name])} segments")
+wait_slips["Optimized (robust)"].round(2)
+
+# %% [markdown]
+# **Reading.** Robust here means robust to the acceptance model's *uncertainty*: the guardrails hold in
+# every one of the 20 posterior draws. It does not protect against the model being *wrong* in the same
+# direction in every draw. Any segment that slips against the truth is worth checking against the
+# hierarchical model's accuracy there in notebook 05 (the airports have the fewest trips).
 
 # %% [markdown]
 # **Where does the gain come from?** The same held-out comparison by pickup borough, trip by trip.
@@ -225,6 +253,129 @@ robust_in_draws = pd.DataFrame([policy.guardrails(fit_table, choice_robust, d) f
 point_in_draws = pd.DataFrame([policy.guardrails(fit_table, choice_point, d) for d in range(1, D + 1)]).mean()
 print("stability:", {k: round(v, 3) for k, v in stability.items()})
 pd.DataFrame({"point policy": point_in_draws, "robust policy": robust_in_draws}).rename_axis("share of posterior draws where the guardrail holds")
+
+# %% [markdown]
+# ## The price of safety: how sure do we need to be?
+#
+# The robust policy demands every guardrail in all 20 posterior draws; the point policy demands them only
+# under the best guess. Between the two, a **chance-constrained** policy demands them in at least a given
+# share of the draws, and the solver picks which draws may fail. Each policy is fitted on the fit months
+# and scored on the held-out months against the truth, so the curve shows what each level of caution
+# costs and whether it buys guardrails that actually hold.
+
+# %%
+from ridepay import ope  # noqa: E402
+
+LEVELS = [0.0, 0.5, 0.8, 0.95, 1.0]
+today_margin = held_summary.loc["Today", "margin_per_request"]
+frontier = []
+for share in LEVELS:
+    ch, res_c, _ = policy.optimize_chance(fit_table, range(1, D + 1), share, time_limit=60 if FAST else 300)
+    if ch is None:
+        print(f"no policy keeps every guardrail in ≥{share:.0%} of draws: {res_c.message}")
+        continue
+    hc = choice_for(held_table, ch)
+    s_, g_ = policy.summarize(held_table, hc), policy.guardrails(held_table, hc)
+    in_draws = pd.DataFrame([policy.guardrails(fit_table, ch, d) for d in range(1, D + 1)]).all(axis=1).mean()
+    frontier.append({"min_share": share, "draws_with_all_guardrails": float(in_draws),
+                     "margin_vs_today_pct": float(100 * (s_["margin_per_request"] / today_margin - 1)),
+                     "held_out_all_guardrails": bool(all(g_.values())), **g_})
+frontier = pd.DataFrame(frontier)
+frontier.round(3)
+
+# %%
+fig, ax = plots.subplots(figsize=(8, 4))
+shown = frontier[frontier["min_share"] > 0]   # no guardrails at all (≥0%) is far off the scale; noted in the title
+ax.plot(100 * shown["draws_with_all_guardrails"], shown["margin_vs_today_pct"], color=plots.SERIES[0], lw=2)
+for k, r in enumerate(shown.itertuples()):
+    ax.plot(100 * r.draws_with_all_guardrails, r.margin_vs_today_pct, "o", ms=9,
+            color=plots.SERIES[0] if r.held_out_all_guardrails else plots.SERIES[1])
+    ax.annotate(f"≥{r.min_share:.0%}: {r.margin_vs_today_pct:+.1f}%", (100 * r.draws_with_all_guardrails, r.margin_vs_today_pct),
+                (-8, 10 if k % 2 == 0 else -16), textcoords="offset points", fontsize=8, ha="right")
+free = frontier.loc[frontier["min_share"] == 0, "margin_vs_today_pct"]
+ax.set(xlabel="share of posterior draws in which every guardrail holds (fit months)",
+       ylabel="margin per request vs today, held out (%)",
+       title="The price of safety: margin given up for guardrails that hold in more plausible worlds"
+       + (f"\n(with no guardrails at all: {free.iloc[0]:+.1f}%, breaking them)" if len(free) else ""))
+ax.margins(x=0.15, y=0.3)
+data.savefig(fig, "06b_price_of_safety")
+
+# %% [markdown]
+# **How to read the figure.** Each point is a policy that demands the guardrails in at least the labelled
+# share of posterior draws. Left to right, more caution; down, less margin. Blue points keep every guardrail
+# on the held-out months against the truth, orange points break at least one.
+#
+# Which points clear the held-out check depends on where the model happens to be wrong, which a platform
+# cannot see before launch. So the curve is read for what caution costs in margin, not to pick the point
+# that passed: a policy that keeps the guardrails in 80% of plausible worlds breaks them in the other 20%.
+
+# %% [markdown]
+# ## Could we have known without the truth? Off-policy evaluation
+#
+# A real platform never sees the planted truth. What it has is the randomized pay test. Suppose the test
+# kept running in the held-out months (8% of offers moved by ±15%, never below the floor). Kernel-weighted
+# inverse propensity scoring estimates the robust policy's first-offer acceptance from those test trips
+# alone, and is checked here against the truth on the same trips. It can only judge trips where the
+# policy's change falls inside what the test randomized; the share it cannot judge is itself a finding.
+
+# %%
+R, H = simulate.TEST_RANGE, 0.02
+rng_t = np.random.default_rng(11)
+n_h = len(held_df)
+in_test = rng_t.random(n_h) < simulate.TEST_SHARE
+shock = np.where(in_test, rng_t.uniform(-R, R, n_h), 0.0)
+floor_h, sq_h = held_df["floor"].to_numpy(), held_df["offer_sq"].to_numpy()
+offer_obs = np.maximum(floor_h, sq_h * (1 + shock))
+accept_obs = (rng_t.random(n_h) < accept_truth(held_df, np.log(offer_obs / floor_h))).astype(float)
+pol_offer = floor_h * (1 + held_df["cell"].map(robust_premium).fillna(0.0).to_numpy())
+x_target, x_obs = np.log(pol_offer / sq_h), np.log(offer_obs / sq_h)
+floor_shift = np.log(floor_h / sq_h)
+sup = ope.supported(x_target, floor_shift, R, H)
+changed = np.abs(x_target) > 0.005
+
+
+def ope_change(idx):
+    t_, c_ = idx[in_test[idx]], idx[~in_test[idx] & sup[idx]]
+    est, _ = ope.kernel_ipw(accept_obs[t_], x_obs[t_], x_target[t_], floor_shift[t_], R, H)
+    return est - accept_obs[c_].mean()
+
+
+est_change = ope_change(np.arange(n_h))
+est_ci = ope.bootstrap_ci(ope_change, n_h, reps=50 if FAST else 300)
+hs = held_df[sup]
+true_change = float(accept_truth(hs, np.log(pol_offer[sup] / floor_h[sup])).mean()
+                    - accept_truth(hs, np.log(sq_h[sup] / floor_h[sup])).mean())
+model_change = float(accept_model(hs, np.log(pol_offer[sup] / floor_h[sup]), mean_draw).mean()
+                     - accept_model(hs, np.log(sq_h[sup] / floor_h[sup]), mean_draw).mean())
+ope_check = {"bandwidth": H, "test_share": simulate.TEST_SHARE, "test_range": R, "test_trips": int(in_test.sum()),
+             "share_supported": float(sup.mean()), "share_changed": float(changed.mean()),
+             "share_of_changes_supported": float(sup[changed].mean()) if changed.any() else float("nan"),
+             "share_of_changes_beyond_range": float((np.abs(x_target[changed]) > np.log1p(R)).mean()) if changed.any() else float("nan"),
+             "acceptance_change_ope": float(est_change), "acceptance_change_ope_ci": list(est_ci),
+             "acceptance_change_truth": true_change, "acceptance_change_model": model_change,
+             "truth_inside_ci": bool(est_ci[0] <= true_change <= est_ci[1])}
+print({k: (round(v, 4) if isinstance(v, float) else v) for k, v in ope_check.items()})
+
+# %%
+_ = write_metrics("06b_policy_checks", {
+    "added": "2026-11-06, after the results above; see PROJECT_PLAN.md",
+    "frontier": frontier.to_dict(orient="records"), "ope": ope_check}, SOURCE)
+show_verdict(
+    "Checks: the price of safety and off-policy evaluation",
+    [
+        "**The price of safety**: " + "; ".join(
+            f"guardrails in ≥{r.min_share:.0%} of draws → {r.margin_vs_today_pct:+.1f}% margin held out"
+            + ("" if r.held_out_all_guardrails else " (breaks a guardrail held out)") for r in frontier.itertuples()) + ".",
+        f"**Off-policy evaluation from the pay test alone** puts the robust policy's change in first-offer acceptance at "
+        f"{100 * est_change:+.1f} points (95% interval {100 * est_ci[0]:+.1f} to {100 * est_ci[1]:+.1f}) on the trips it can "
+        f"judge; the truth there is {100 * true_change:+.1f} and the pay model says {100 * model_change:+.1f}"
+        + (", so the test alone would have confirmed it." if ope_check["truth_inside_ci"] else ", which misses the truth.")
+        + f" It can judge only {ope_check['share_of_changes_supported']:.0%} of the trips whose offer the policy changes; "
+        f"{ope_check['share_of_changes_beyond_range']:.0%} of the changes lie beyond the test's ±{R:.0%}. To evaluate pay "
+        "policies like this one offline, the randomized slice must reach the premiums they use.",
+    ],
+    "the dispatch simulation below, then phase 7.",
+)
 
 # %% [markdown]
 # ## Part B: dispatch simulation on real Brooklyn requests
@@ -391,6 +542,7 @@ record = {
     "fit_summary": fit_summary.round(5).to_dict(orient="index"),
     "held_summary": held_summary.round(5).to_dict(orient="index"),
     "by_borough": by_borough.round(5).reset_index().to_dict(orient="records"),
+    "held_wait_slips": {k: v.round(4).to_dict(orient="records") for k, v in wait_slips.items()},
     "stability": stability, "guardrails_in_draws": {"point": point_in_draws.to_dict(), "robust": robust_in_draws.to_dict()},
     "premium_table": cells_view.round(4).to_dict(orient="records"),
     "sim": {"days": [str(d) for d in days], "supply_profile": {str(k): np.round(v, 4).tolist() for k, v in calib.items()},
@@ -413,6 +565,7 @@ rob, today = H.loc["Optimized (robust)"], H.loc["Today"]
 ep = effects.loc["Robust policy − today's pay"]
 em = effects.loc["Batched − greedy matching"]
 all_ok = bool(rob[["C3_wait", "C4_acceptance", "C5_earnings"]].all())
+rs = wait_slips["Optimized (robust)"]
 GUARDS = ["C3_wait", "C4_acceptance", "C5_earnings"]
 GUARD_NAMES = {"C3_wait": "wait", "C4_acceptance": "acceptance", "C5_earnings": "earnings"}
 show_verdict(
@@ -421,8 +574,14 @@ show_verdict(
         f"**Held out (Apr–Jun 2025), scored against the truth, the robust policy raises margin per request by "
         f"{rob['margin_vs_today_pct']:+.1f}%** (${today['margin_per_request']:.2f} → ${rob['margin_per_request']:.2f}) "
         f"with first-offer acceptance {today['first_offer_acceptance']:.1%} → {rob['first_offer_acceptance']:.1%} and pay per "
-        f"trip ${today['pay_per_trip']:.2f} → ${rob['pay_per_trip']:.2f}; guardrails C3–C5 "
-        f"{'all hold' if all_ok else 'do NOT all hold: ' + str(rob[['C3_wait', 'C4_acceptance', 'C5_earnings']].to_dict())}.",
+        f"trip ${today['pay_per_trip']:.2f} → ${rob['pay_per_trip']:.2f}"
+        + ("; guardrails C3–C5 all hold." if all_ok else
+           "; acceptance and earnings guardrails "
+           + ("hold" if rob["C4_acceptance"] and rob["C5_earnings"] else "do NOT both hold")
+           + (f", and rider wait is at or below today in {len(wait_seg['Optimized (robust)']) - len(rs)} of "
+              f"{len(wait_seg['Optimized (robust)'])} segments but slips in {len(rs)} (worst: {rs.iloc[0]['cluster']} "
+              f"{rs.iloc[0]['band']}, {rs.iloc[0]['wait_today_sec']:.1f} → {rs.iloc[0]['wait_policy_sec']:.1f} s of extra wait "
+              f"per trip). Robust to the model's uncertainty is not robust to its errors." if len(rs) else ".")),
         f"**Floor-only is a trap**: it pays least but {'breaks' if not H.loc['Floor only', ['C3_wait', 'C4_acceptance', 'C5_earnings']].all() else 'keeps'} "
         f"the guardrails (acceptance {H.loc['Floor only', 'first_offer_acceptance']:.1%}, margin "
         f"{H.loc['Floor only', 'margin_vs_today_pct']:+.1f}% once cancellations are counted).",

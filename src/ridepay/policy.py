@@ -112,29 +112,11 @@ def optimize(t: CellTable, constraint_draws=None, objective_draws=None, time_lim
         A.append(row)
         lo.append(1)
         hi.append(1)
-    seg = t.cells.groupby(["cluster_name", "band"]).indices
-    clus = t.cells.groupby("cluster_name").indices
     for d in constraint_draws:
-        S, Q = t.sums, t.status_quo
-        # C3: extra wait per segment <= today
-        for idx in seg.values():
-            row = np.zeros((C, K))
-            row[idx] = S["extra_wait_sec"][d, idx]
-            A.append(row.ravel())
-            lo.append(-np.inf)
-            hi.append(Q["extra_wait_sec"][d, idx].sum() + 1e-6)
-        # C4: total first-offer acceptance >= today
-        A.append(S["accept_first"][d].ravel())
-        lo.append(Q["accept_first"][d].sum() - 1e-6)
-        hi.append(np.inf)
-        # C5: pay - 0.95 * today's earnings rate * engaged hours >= 0, per cluster
-        for idx in clus.values():
-            rate = Q["driver_pay"][d, idx].sum() / Q["engaged_hours"][d, idx].sum()
-            row = np.zeros((C, K))
-            row[idx] = S["driver_pay"][d, idx] - EARNINGS_FLOOR * rate * S["engaged_hours"][d, idx]
-            A.append(row.ravel())
-            lo.append(-1e-6)
-            hi.append(np.inf)
+        for row, low, h in _guardrail_rows(t, d):
+            A.append(row)
+            lo.append(low)
+            hi.append(h)
     A, lo, hi = np.array(A), np.array(lo), np.array(hi)
     options = {"time_limit": time_limit, "disp": False}
     res = milp(c, constraints=LinearConstraint(A, lo, hi), integrality=np.ones(nvar), bounds=Bounds(0, 1),
@@ -146,6 +128,76 @@ def optimize(t: CellTable, constraint_draws=None, objective_draws=None, time_lim
         res = _least_violation(c, A, lo, hi, n_hard=C, options=options)
     choice = res.x[:nvar].reshape(C, K).argmax(axis=1)
     return choice, res
+
+
+def _guardrail_rows(t: CellTable, d: int):
+    """The C3-C5 guardrail rows (row over the C*K choice variables, lower, upper) under draw ``d``."""
+    C, K = t.sums["margin"].shape[1:]
+    S, Q = t.sums, t.status_quo
+    rows = []
+    # C3: extra wait per segment <= today
+    for idx in t.cells.groupby(["cluster_name", "band"]).indices.values():
+        row = np.zeros((C, K))
+        row[idx] = S["extra_wait_sec"][d, idx]
+        rows.append((row.ravel(), -np.inf, Q["extra_wait_sec"][d, idx].sum() + 1e-6))
+    # C4: total first-offer acceptance >= today
+    rows.append((S["accept_first"][d].ravel(), Q["accept_first"][d].sum() - 1e-6, np.inf))
+    # C5: pay - 0.95 * today's earnings rate * engaged hours >= 0, per cluster
+    for idx in t.cells.groupby("cluster_name").indices.values():
+        rate = Q["driver_pay"][d, idx].sum() / Q["engaged_hours"][d, idx].sum()
+        row = np.zeros((C, K))
+        row[idx] = S["driver_pay"][d, idx] - EARNINGS_FLOOR * rate * S["engaged_hours"][d, idx]
+        rows.append((row.ravel(), -1e-6, np.inf))
+    return rows
+
+
+def optimize_chance(t: CellTable, draws, min_share: float, time_limit: float = 120):
+    """Chance-constrained version of ``optimize``: maximize mean margin over ``draws`` while every
+    guardrail holds in at least ``min_share`` of them (which draws may fail is chosen by the solver).
+
+    One binary per draw switches its guardrail rows on; big-M terms switch them off. ``min_share`` = 1
+    is the robust policy, 0 drops the guardrails. Returns (choice, res, held) with ``held`` the boolean
+    vector of draws whose guardrails the solution satisfies by construction; ``choice`` and ``held`` are
+    None when no policy keeps the guardrails in that many draws."""
+    draws = list(draws)
+    D = len(draws)
+    C, K = t.sums["margin"].shape[1:]
+    nx = C * K
+    need = int(np.ceil(min_share * D - 1e-9))
+    c = np.r_[-t.sums["margin"][draws].mean(axis=0).ravel(), np.zeros(D)]
+    A, lo, hi = [], [], []
+    for i in range(C):                                     # one option per cell
+        row = np.zeros(nx + D)
+        row[i * K:(i + 1) * K] = 1
+        A.append(row)
+        lo.append(1)
+        hi.append(1)
+    for j, d in enumerate(draws):
+        for row, low, h in _guardrail_rows(t, d):
+            r = row.reshape(C, K)
+            full = np.r_[row, np.zeros(D)]
+            if np.isfinite(h):                             # row.x <= h, relaxed when z_j = 0
+                M = max(r.max(axis=1).sum() - h, 0.0)
+                full[nx + j] = M
+                A.append(full)
+                lo.append(-np.inf)
+                hi.append(h + M)
+            else:                                          # row.x >= low, relaxed when z_j = 0
+                M = max(low - r.min(axis=1).sum(), 0.0)
+                full[nx + j] = -M
+                A.append(full)
+                lo.append(low - M)
+                hi.append(np.inf)
+    count = np.r_[np.zeros(nx), np.ones(D)]
+    A.append(count)
+    lo.append(need)
+    hi.append(D)
+    res = milp(c, constraints=LinearConstraint(np.array(A), np.array(lo), np.array(hi)), integrality=np.ones(nx + D),
+               bounds=Bounds(0, 1), options={"time_limit": time_limit, "disp": False})
+    if res.x is None:   # no policy keeps the guardrails in that many draws (or none found in time)
+        return None, res, None
+    choice = res.x[:nx].reshape(C, K).argmax(axis=1)
+    return choice, res, res.x[nx:] > 0.5
 
 
 def _least_violation(c, A, lo, hi, n_hard: int, options: dict):

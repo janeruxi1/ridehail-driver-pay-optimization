@@ -1,8 +1,8 @@
 {
   "source": "real",
   "threshold_min": 10,
-  "n_trips": 1787098,
-  "long_wait_rate": 0.05443797710030451,
+  "n_trips": 1785657,
+  "long_wait_rate": 0.05418901838370975,
   "split": {
     "train": [
       "2024-01",
@@ -16,48 +16,48 @@
   },
   "metrics": {
     "Logistic": {
-      "ROC AUC": 0.71701,
-      "PR AUC": 0.18688,
-      "Brier": 0.0643,
-      "log loss": 0.2414
+      "ROC AUC": 0.72057,
+      "PR AUC": 0.1836,
+      "Brier": 0.06395,
+      "log loss": 0.23962
     },
     "LightGBM": {
-      "ROC AUC": 0.73537,
-      "PR AUC": 0.1977,
-      "Brier": 0.06364,
-      "log loss": 0.23664
+      "ROC AUC": 0.7391,
+      "PR AUC": 0.19612,
+      "Brier": 0.06326,
+      "log loss": 0.23516
     },
     "Base rate only": {
       "ROC AUC": 0.5,
-      "PR AUC": 0.07344,
-      "Brier": 0.0685,
-      "log loss": 0.26651
+      "PR AUC": 0.07305,
+      "Brier": 0.06816,
+      "log loss": 0.26547
     }
   },
-  "max_decile_calibration_gap": 0.015747299113050672,
+  "max_decile_calibration_gap": 0.013577596705023648,
   "costs": {
     "flag": 1.0,
     "miss": 8.0
   },
-  "hindsight_threshold": 0.12,
+  "hindsight_threshold": 0.11,
   "decision_threshold": 0.1111111111111111,
   "policy_cost": {
-    "Do nothing": 0.5875,
+    "Do nothing": 0.5844,
     "Flag every request": 1.0,
-    "Model, threshold 0.111 (fixed in advance)": 0.49307,
-    "Model, best threshold in hindsight (0.12)": 0.49307
+    "Model, threshold 0.111 (fixed in advance)": 0.49005,
+    "Model, best threshold in hindsight (0.11)": 0.49005
   },
-  "precision": 0.19172890424701816,
-  "recall": 0.4618069539535508,
-  "flagged_share": 0.17688436266125096,
+  "precision": 0.20103043602709664,
+  "recall": 0.4268638573743922,
+  "flagged_share": 0.15511321592422672,
   "sensitivity": [
     {
       "cost of a long wait": 4,
-      "best threshold": 0.27
+      "best threshold": 0.25
     },
     {
       "cost of a long wait": 8,
-      "best threshold": 0.12
+      "best threshold": 0.11
     },
     {
       "cost of a long wait": 16,
@@ -65,53 +65,46 @@
     }
   ],
   "feature_importance": {
-    "prev_wait_p90_min": 0.309,
-    "zone": 0.228,
-    "prev_wait_min": 0.189,
+    "prev_wait_p90_min": 0.292,
+    "zone": 0.226,
+    "prev_wait_min": 0.195,
     "shared_request": 0.071,
     "hod": 0.053,
-    "prev_city_trips": 0.034,
-    "platform": 0.027,
-    "trip_miles": 0.025,
-    "prev_city_wait_min": 0.021,
-    "prev_trips": 0.017
+    "prev_city_trips": 0.036,
+    "trip_miles": 0.03,
+    "platform": 0.026,
+    "prev_city_wait_min": 0.024,
+    "prev_trips": 0.018
   },
-  "trees": 249,
+  "trees": 288,
   "by_cluster": [
     {
       "cluster_name": "Airports",
-      "trips": 8062,
-      "long_wait_rate": 0.19338,
-      "mean_pred": 0.18561,
-      "flagged": 0.64599
+      "trips": 8056,
+      "long_wait_rate": 0.19104,
+      "mean_pred": 0.19321,
+      "flagged": 0.62599
     },
     {
       "cluster_name": "Commuter residential",
-      "trips": 94680,
-      "long_wait_rate": 0.0711,
-      "mean_pred": 0.0647,
-      "flagged": 0.14966
+      "trips": 94376,
+      "long_wait_rate": 0.07093,
+      "mean_pred": 0.06404,
+      "flagged": 0.12719
     },
     {
       "cluster_name": "Core",
-      "trips": 98879,
-      "long_wait_rate": 0.06439,
-      "mean_pred": 0.06248,
-      "flagged": 0.15986
+      "trips": 99103,
+      "long_wait_rate": 0.06405,
+      "mean_pred": 0.06207,
+      "flagged": 0.13899
     },
     {
       "cluster_name": "Long waits",
-      "trips": 1244,
-      "long_wait_rate": 0.19212,
-      "mean_pred": 0.17187,
-      "flagged": 0.5619
-    },
-    {
-      "cluster_name": "Sparse",
-      "trips": 2,
-      "long_wait_rate": 0.5,
-      "mean_pred": 0.08448,
-      "flagged": 0.0
+      "trips": 1175,
+      "long_wait_rate": 0.19319,
+      "mean_pred": 0.17686,
+      "flagged": 0.52936
     }
   ]
 }

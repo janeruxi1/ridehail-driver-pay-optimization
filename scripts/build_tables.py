@@ -32,9 +32,9 @@ def process_month(spark, month: str, keep_raw: bool) -> dict:
     flagged = etl.flag_rules(etl.add_derived(etl.read_month(spark, raw)), month).cache()
     report = {"month": month, "file_rows": parquet_rows(raw), **etl.quality_report(flagged)}
     clean = flagged.filter("keep")
-    etl.zone_hour(clean).write.mode("overwrite").parquet(str(out_dir / "zone_hour" / f"month={month}"))
-    etl.od_hour(clean).write.mode("overwrite").parquet(str(out_dir / "od_hour" / f"month={month}"))
-    etl.trip_sample(clean).write.mode("overwrite").parquet(str(config.SAMPLE / f"month={month}"))
+    etl.write_table(etl.zone_hour(clean), out_dir / "zone_hour" / f"month={month}")
+    etl.write_table(etl.od_hour(clean), out_dir / "od_hour" / f"month={month}")
+    etl.write_table(etl.trip_sample(clean), config.SAMPLE / f"month={month}")
     flagged.unpersist()
     report["seconds"] = round(time.time() - t0, 1)
     done.parent.mkdir(parents=True, exist_ok=True)

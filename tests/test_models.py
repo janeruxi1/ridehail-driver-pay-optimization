@@ -116,3 +116,29 @@ def test_optimizer_returns_least_violating_policy_when_no_policy_meets_every_gua
     assert res.relaxed and res.violation > 0
     assert not policy.guardrails(t, choice)["C4_acceptance"]
     assert (policy.PREMIUMS[choice] == policy.PREMIUMS.max()).all()   # the closest it can get: the cap
+
+
+def test_chance_constrained_policy_trades_margin_for_guardrail_coverage():
+    """With draws that disagree on pay sensitivity, demanding the guardrails in more draws can only cost
+    margin, and the share demanded is met by construction."""
+    n = 400
+    df = pd.DataFrame({"cell": np.repeat(["A|midday|q1", "A|midday|q5"], n), "cluster_name": "A", "band": "midday",
+                       "floor": 10.0, "fare": 16.0, "minutes": 15.0})
+    df["offer_sq"] = df["floor"] * 1.1
+    base = np.where(df["cell"].str.endswith("q1"), 8.0, 0.5)
+
+    def fn(d, lr, scale):
+        return 1 / (1 + np.exp(-(0.3 + scale * base * lr)))
+
+    t = policy.cell_table(df, fn, [0.4, 0.7, 1.0, 1.3, 1.6])
+    draws = range(5)
+    margins = []
+    for share in (0.0, 0.6, 1.0):
+        choice, _, held = policy.optimize_chance(t, draws, share)
+        assert held.sum() >= np.ceil(share * 5 - 1e-9)
+        for d in np.flatnonzero(held):
+            assert all(policy.guardrails(t, choice, d).values())
+        margins.append(np.mean([policy.summarize(t, choice, d)["margin_per_request"] for d in draws]))
+    assert margins[0] >= margins[1] - 1e-9 >= margins[2] - 2e-9
+    robust, _ = policy.optimize(t, constraint_draws=draws, objective_draws=draws)
+    assert abs(np.mean([policy.summarize(t, robust, d)["margin_per_request"] for d in draws]) - margins[2]) < 1e-6

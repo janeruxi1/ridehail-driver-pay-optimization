@@ -102,5 +102,33 @@ def expected():
 @pytest.mark.parametrize("doc,index", [("README.md", 0), ("reports/decision_memo.md", 1), ("reports/model_card.md", 2)])
 def test_document_numbers_match_records(doc, index):
     text = (ROOT / doc).read_text(encoding="utf-8")
+    if doc == "README.md":   # the README and its full-results page together
+        text += "\n" + (ROOT / "docs" / "results.md").read_text(encoding="utf-8")
     missing = sorted(s for s in expected()[index] if s not in text)
     assert not missing, f"{doc} does not quote: {missing}"
+
+
+def test_readme_guardrail_draws_match_record():
+    m6 = json.loads((ROOT / "reports" / "metrics" / "06_policy_simulation.json").read_text(encoding="utf-8"))
+    text = (ROOT / "README.md").read_text(encoding="utf-8")
+    point = m6["held_summary"]["Optimized (point)"]["margin_vs_today_pct"]
+    assert f"earns +{point:.1f}%" in text
+    assert f"only {100 * m6['guardrails_in_draws']['point']['C3_wait']:.0f}% of plausible" in text
+    assert f"in {100 * (1 - m6['guardrails_in_draws']['point']['C3_wait']):.0f}% of them" in text
+
+
+def test_policy_checks_match_records():
+    path = M / "06b_policy_checks.json"
+    if not path.exists():
+        pytest.skip("06b record not present")
+    ope = rec("06b_policy_checks")["ope"]
+    lo, hi = (100 * x for x in ope["acceptance_change_ope_ci"])
+    quoted = (f"+{r(100 * ope['acceptance_change_ope'], 1)} points, 95% interval +{r(lo, 1)} to +{r(hi, 1)}; "
+              f"truth +{r(100 * ope['acceptance_change_truth'], 1)}")
+    judged = f"{r(100 * ope['share_of_changes_supported'], 0)}% of the"
+    for doc in ("README.md", "reports/decision_memo.md"):
+        text = (ROOT / doc).read_text(encoding="utf-8")
+        assert quoted in text and judged in text, doc
+    slips = rec("06_policy_simulation").get("held_wait_slips", {}).get("Optimized (robust)")
+    if slips is not None:
+        assert f"{20 - len(slips)} of 20 segments" in (ROOT / "README.md").read_text(encoding="utf-8")

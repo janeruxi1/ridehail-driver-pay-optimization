@@ -14,354 +14,354 @@
     "2024-11",
     "2024-12"
   ],
-  "n_trips": 593901,
-  "n_test": 31896,
-  "acceptance": 0.7237182628081111,
-  "ame_true": 0.659292741430858,
+  "n_trips": 593403,
+  "n_test": 31872,
+  "acceptance": 0.7242245152114162,
+  "ame_true": 0.65870528762198,
   "estimates": [
     {
       "method": "Naive (no controls)",
-      "estimate": 0.33400946065627846,
-      "lo": 0.3304594997030918,
-      "hi": 0.3375594216094651,
-      "truth_of_estimand": 0.660451172664976,
-      "n": 562005,
+      "estimate": 0.3324256306968362,
+      "lo": 0.328909955556339,
+      "hi": 0.33594130583733345,
+      "truth_of_estimand": 0.6599713583194258,
+      "n": 561531,
       "covers_truth": false,
-      "per_10pct_pay_pp": 3.183450175149549
+      "per_10pct_pay_pp": 3.168354663328158
     },
     {
       "method": "Double ML",
-      "estimate": 0.426258927135625,
-      "lo": 0.42079331062600955,
-      "hi": 0.4317245436452405,
-      "truth_of_estimand": 0.4252837278788177,
-      "n": 562005,
+      "estimate": 0.423079061913939,
+      "lo": 0.4176457914455522,
+      "hi": 0.42851233238232583,
+      "truth_of_estimand": 0.4247110147436314,
+      "n": 561531,
       "covers_truth": true,
-      "per_10pct_pay_pp": 4.062681498849506
+      "per_10pct_pay_pp": 4.032374146246265
     },
     {
       "method": "Randomized pay test (IV)",
-      "estimate": 0.5908039081634012,
-      "lo": 0.5107758610804756,
-      "hi": 0.6708319552463269,
-      "truth_of_estimand": 0.5877328194652249,
-      "n": 31896,
+      "estimate": 0.5293975094905152,
+      "lo": 0.4491996542169264,
+      "hi": 0.609595364764104,
+      "truth_of_estimand": 0.5863733161834653,
+      "n": 31872,
       "covers_truth": true,
-      "per_10pct_pay_pp": 5.630962671615165
+      "per_10pct_pay_pp": 5.045697181750283
     }
   ],
   "model_vs_test": {
-    "model_implied_iv": 0.616558225800135,
-    "model_lo90": 0.59214464215542,
-    "model_hi90": 0.6396117523197031,
-    "test_iv": 0.5908039081634012,
-    "test_lo": 0.5107758610804756,
-    "test_hi": 0.6708319552463269,
+    "model_implied_iv": 0.6134492252976628,
+    "model_lo90": 0.5887517011572588,
+    "model_hi90": 0.6362284068350239,
+    "test_iv": 0.5293975094905152,
+    "test_lo": 0.4491996542169264,
+    "test_hi": 0.609595364764104,
     "agree": true
   },
   "hidden_confounding": [
     {
       "method": "Double ML",
-      "estimate": 0.32140628088627804,
-      "lo": 0.31565452704205926,
-      "hi": 0.3271580347304968,
-      "truth_of_estimand": 0.576944815571949,
+      "estimate": 0.32144628146452425,
+      "lo": 0.31571931614921556,
+      "hi": 0.32717324677983295,
+      "truth_of_estimand": 0.5770936709591147,
       "covers_truth": false
     },
     {
       "method": "Randomized pay test (IV)",
-      "estimate": 0.5993161883532037,
-      "lo": 0.5190285878868036,
-      "hi": 0.6796037888196037,
-      "truth_of_estimand": 0.6088078554029303,
+      "estimate": 0.5616734490962718,
+      "lo": 0.481105752912497,
+      "hi": 0.6422411452800466,
+      "truth_of_estimand": 0.6062177067816241,
       "covers_truth": true
     }
   ],
   "hierarchical": {
     "diagnostics": {
-      "max_rhat": 1.0066,
-      "min_ess_bulk": 664.9983,
+      "max_rhat": 1.0047,
+      "min_ess_bulk": 753.9624,
       "divergences": 0,
-      "seconds": 256
+      "seconds": 478
     },
     "rmse": {
-      "no_pool": 1.7962448948459766,
-      "hierarchical": 0.6164079188079608
+      "no_pool": 7.705646411348634,
+      "hierarchical": 0.6806886578094088
     },
     "coverage90": 1.0,
     "attenuation": 0.9593677930575893,
     "hyper": {
       "mu_beta[Airports]": {
-        "mean": 5.9123,
-        "sd": 0.6724,
-        "r_hat": 1.0026
-      },
-      "mu_beta[Commuter residential]": {
-        "mean": 3.5844,
-        "sd": 0.3501,
-        "r_hat": 1.0007
-      },
-      "mu_beta[Core]": {
-        "mean": 3.6658,
-        "sd": 0.3275,
-        "r_hat": 1.0024
-      },
-      "mu_beta[Long waits]": {
-        "mean": 2.983,
-        "sd": 0.8528,
-        "r_hat": 1.0001
-      },
-      "sigma_beta": {
-        "mean": 0.6593,
-        "sd": 0.2558,
-        "r_hat": 1.0039
-      },
-      "mu_alpha[Airports]": {
-        "mean": 0.0631,
-        "sd": 0.0956,
-        "r_hat": 0.9996
-      },
-      "mu_alpha[Commuter residential]": {
-        "mean": 0.9519,
-        "sd": 0.0732,
+        "mean": 6.9526,
+        "sd": 0.7354,
         "r_hat": 1.0008
       },
+      "mu_beta[Commuter residential]": {
+        "mean": 3.5433,
+        "sd": 0.3419,
+        "r_hat": 1.0005
+      },
+      "mu_beta[Core]": {
+        "mean": 3.6363,
+        "sd": 0.3193,
+        "r_hat": 0.9996
+      },
+      "mu_beta[Long waits]": {
+        "mean": 3.5368,
+        "sd": 0.9166,
+        "r_hat": 0.9996
+      },
+      "sigma_beta": {
+        "mean": 0.6431,
+        "sd": 0.2335,
+        "r_hat": 1.0029
+      },
+      "mu_alpha[Airports]": {
+        "mean": 0.0635,
+        "sd": 0.0967,
+        "r_hat": 1.0001
+      },
+      "mu_alpha[Commuter residential]": {
+        "mean": 0.9286,
+        "sd": 0.0765,
+        "r_hat": 1.0013
+      },
       "mu_alpha[Core]": {
-        "mean": 0.8464,
-        "sd": 0.0785,
-        "r_hat": 1.0066
+        "mean": 0.8676,
+        "sd": 0.0723,
+        "r_hat": 1.0013
       },
       "mu_alpha[Long waits]": {
-        "mean": 0.8856,
-        "sd": 0.1706,
-        "r_hat": 1.0019
+        "mean": 0.8041,
+        "sd": 0.1663,
+        "r_hat": 1.0012
       },
       "sigma_alpha": {
-        "mean": 0.1555,
-        "sd": 0.0414,
-        "r_hat": 1.0018
+        "mean": 0.1508,
+        "sd": 0.0467,
+        "r_hat": 1.0016
       }
     },
-    "ppc_max_decile_gap": 0.010289363610372804,
+    "ppc_max_decile_gap": 0.008419231430789709,
     "segments": [
       {
         "cluster": "Airports",
         "band": "am_peak",
-        "n": 199,
+        "n": 182,
         "beta_true": 5.9075,
-        "beta_no_pool": 5.9022,
-        "beta_hier": 5.8467,
-        "lo90": 4.4056,
-        "hi90": 7.2628,
+        "beta_no_pool": 4.5241,
+        "beta_hier": 6.6249,
+        "lo90": 5.0672,
+        "hi90": 8.0776,
         "covered90": true
       },
       {
         "cluster": "Airports",
         "band": "evening",
-        "n": 422,
+        "n": 417,
         "beta_true": 6.4159,
-        "beta_no_pool": 3.7352,
-        "beta_hier": 5.3762,
-        "lo90": 4.0779,
-        "hi90": 6.5588,
+        "beta_no_pool": 8.4608,
+        "beta_hier": 7.4075,
+        "lo90": 6.0847,
+        "hi90": 8.8543,
         "covered90": true
       },
       {
         "cluster": "Airports",
         "band": "midday",
-        "n": 503,
+        "n": 442,
         "beta_true": 5.7275,
-        "beta_no_pool": 10.6245,
-        "beta_hier": 6.7166,
-        "lo90": 5.3731,
-        "hi90": 8.1899,
+        "beta_no_pool": 6.845,
+        "beta_hier": 6.8889,
+        "lo90": 5.5125,
+        "hi90": 8.2916,
         "covered90": true
       },
       {
         "cluster": "Airports",
         "band": "night",
-        "n": 126,
+        "n": 129,
         "beta_true": 6.8331,
-        "beta_no_pool": 10.5741,
-        "beta_hier": 6.2457,
-        "lo90": 4.8192,
-        "hi90": 7.8497,
+        "beta_no_pool": 11.9981,
+        "beta_hier": 7.282,
+        "lo90": 5.8021,
+        "hi90": 8.853,
         "covered90": true
       },
       {
         "cluster": "Airports",
         "band": "pm_peak",
-        "n": 355,
+        "n": 344,
         "beta_true": 5.7145,
-        "beta_no_pool": 5.1937,
-        "beta_hier": 5.7923,
-        "lo90": 4.4963,
-        "hi90": 7.1057,
+        "beta_no_pool": 7.0347,
+        "beta_hier": 6.9849,
+        "lo90": 5.6244,
+        "hi90": 8.395,
         "covered90": true
       },
       {
         "cluster": "Commuter residential",
         "band": "am_peak",
-        "n": 3853,
+        "n": 3785,
         "beta_true": 3.4847,
-        "beta_no_pool": 3.5909,
-        "beta_hier": 3.6479,
-        "lo90": 3.2074,
-        "hi90": 4.1215,
+        "beta_no_pool": 3.701,
+        "beta_hier": 3.9255,
+        "lo90": 3.4546,
+        "hi90": 4.4377,
         "covered90": true
       },
       {
         "cluster": "Commuter residential",
         "band": "evening",
-        "n": 3085,
+        "n": 3135,
         "beta_true": 3.6991,
-        "beta_no_pool": 3.3247,
-        "beta_hier": 3.4953,
-        "lo90": 2.9984,
-        "hi90": 4.0199,
+        "beta_no_pool": 3.2696,
+        "beta_hier": 3.3557,
+        "lo90": 2.8986,
+        "hi90": 3.8372,
         "covered90": true
       },
       {
         "cluster": "Commuter residential",
         "band": "midday",
-        "n": 5339,
+        "n": 5200,
         "beta_true": 3.144,
-        "beta_no_pool": 3.3602,
-        "beta_hier": 3.3873,
-        "lo90": 2.9576,
-        "hi90": 3.818,
+        "beta_no_pool": 3.0288,
+        "beta_hier": 3.0127,
+        "lo90": 2.5859,
+        "hi90": 3.4315,
         "covered90": true
       },
       {
         "cluster": "Commuter residential",
         "band": "night",
-        "n": 2152,
+        "n": 2153,
         "beta_true": 4.8346,
-        "beta_no_pool": 4.9016,
-        "beta_hier": 4.3504,
-        "lo90": 3.6934,
-        "hi90": 5.0783,
+        "beta_no_pool": 4.8283,
+        "beta_hier": 4.4491,
+        "lo90": 3.7525,
+        "hi90": 5.2033,
         "covered90": true
       },
       {
         "cluster": "Commuter residential",
         "band": "pm_peak",
-        "n": 3820,
+        "n": 3956,
         "beta_true": 3.0538,
-        "beta_no_pool": 3.0653,
-        "beta_hier": 3.045,
-        "lo90": 2.5916,
-        "hi90": 3.4962,
+        "beta_no_pool": 2.8675,
+        "beta_hier": 3.0595,
+        "lo90": 2.6441,
+        "hi90": 3.4916,
         "covered90": true
       },
       {
         "cluster": "Core",
         "band": "am_peak",
-        "n": 2627,
+        "n": 2629,
         "beta_true": 4.2372,
-        "beta_no_pool": 4.0797,
-        "beta_hier": 3.8837,
-        "lo90": 3.3834,
-        "hi90": 4.4171,
+        "beta_no_pool": 3.8094,
+        "beta_hier": 3.811,
+        "lo90": 3.3235,
+        "hi90": 4.2896,
         "covered90": true
       },
       {
         "cluster": "Core",
         "band": "evening",
-        "n": 4756,
+        "n": 4716,
         "beta_true": 3.413,
-        "beta_no_pool": 3.2025,
-        "beta_hier": 3.1776,
-        "lo90": 2.8083,
-        "hi90": 3.5507,
+        "beta_no_pool": 3.5336,
+        "beta_hier": 3.4189,
+        "lo90": 3.0648,
+        "hi90": 3.7934,
         "covered90": true
       },
       {
         "cluster": "Core",
         "band": "midday",
-        "n": 4959,
+        "n": 5155,
         "beta_true": 3.3377,
-        "beta_no_pool": 3.4595,
-        "beta_hier": 3.5178,
-        "lo90": 3.1014,
-        "hi90": 3.9225,
+        "beta_no_pool": 3.4083,
+        "beta_hier": 3.4656,
+        "lo90": 3.056,
+        "hi90": 3.8642,
         "covered90": true
       },
       {
         "cluster": "Core",
         "band": "night",
-        "n": 2937,
+        "n": 2961,
         "beta_true": 4.3648,
-        "beta_no_pool": 4.5459,
-        "beta_hier": 4.3326,
-        "lo90": 3.8295,
-        "hi90": 4.8771,
+        "beta_no_pool": 4.4049,
+        "beta_hier": 4.1391,
+        "lo90": 3.66,
+        "hi90": 4.6439,
         "covered90": true
       },
       {
         "cluster": "Core",
         "band": "pm_peak",
-        "n": 4608,
+        "n": 4543,
         "beta_true": 3.488,
-        "beta_no_pool": 3.3458,
-        "beta_hier": 3.4914,
-        "lo90": 3.1025,
-        "hi90": 3.8748,
+        "beta_no_pool": 3.2963,
+        "beta_hier": 3.3798,
+        "lo90": 3.0092,
+        "hi90": 3.7656,
         "covered90": true
       },
       {
         "cluster": "Long waits",
         "band": "am_peak",
-        "n": 25,
+        "n": 28,
         "beta_true": 4.0835,
         "beta_no_pool": null,
-        "beta_hier": 2.997,
-        "lo90": 1.3951,
-        "hi90": 4.66,
+        "beta_hier": 3.4571,
+        "lo90": 1.7571,
+        "hi90": 5.2831,
         "covered90": true
       },
       {
         "cluster": "Long waits",
         "band": "evening",
-        "n": 55,
+        "n": 59,
         "beta_true": 4.0273,
-        "beta_no_pool": 4.1696,
-        "beta_hier": 3.163,
-        "lo90": 1.4964,
-        "hi90": 4.9675,
+        "beta_no_pool": 5.3237,
+        "beta_hier": 3.5736,
+        "lo90": 1.9212,
+        "hi90": 5.2882,
         "covered90": true
       },
       {
         "cluster": "Long waits",
         "band": "midday",
-        "n": 62,
+        "n": 79,
         "beta_true": 3.2884,
-        "beta_no_pool": 0.7078,
-        "beta_hier": 2.8772,
-        "lo90": 1.2488,
-        "hi90": 4.5459,
+        "beta_no_pool": 2.2726,
+        "beta_hier": 3.3384,
+        "lo90": 1.7166,
+        "hi90": 5.1046,
         "covered90": true
       },
       {
         "cluster": "Long waits",
         "band": "night",
-        "n": 18,
+        "n": 19,
         "beta_true": 4.6897,
         "beta_no_pool": null,
-        "beta_hier": 3.2313,
-        "lo90": 1.6896,
-        "hi90": 4.9134,
+        "beta_hier": 3.4355,
+        "lo90": 1.7861,
+        "hi90": 5.2331,
         "covered90": true
       },
       {
         "cluster": "Long waits",
         "band": "pm_peak",
-        "n": 99,
+        "n": 68,
         "beta_true": 4.1754,
-        "beta_no_pool": 2.2681,
-        "beta_hier": 2.6871,
-        "lo90": 1.2172,
-        "hi90": 4.2028,
+        "beta_no_pool": 36.0202,
+        "beta_hier": 3.9409,
+        "lo90": 2.2139,
+        "hi90": 5.8076,
         "covered90": true
       }
     ]
@@ -370,77 +370,77 @@
     {
       "cluster_name": "Airports",
       "band": "am_peak",
-      "a": -0.0068,
+      "a": -0.0261,
       "beta": 5.9075,
       "target_acceptance": 0.5
     },
     {
       "cluster_name": "Airports",
       "band": "evening",
-      "a": 0.3652,
+      "a": 0.3779,
       "beta": 6.4159,
       "target_acceptance": 0.5
     },
     {
       "cluster_name": "Airports",
       "band": "midday",
-      "a": -0.018,
+      "a": -0.0166,
       "beta": 5.7275,
       "target_acceptance": 0.5
     },
     {
       "cluster_name": "Airports",
       "band": "night",
-      "a": 0.6866,
+      "a": 0.683,
       "beta": 6.8331,
       "target_acceptance": 0.5
     },
     {
       "cluster_name": "Airports",
       "band": "pm_peak",
-      "a": 0.1115,
+      "a": 0.121,
       "beta": 5.7145,
       "target_acceptance": 0.5
     },
     {
       "cluster_name": "Commuter residential",
       "band": "am_peak",
-      "a": 1.0845,
+      "a": 1.0854,
       "beta": 3.4847,
       "target_acceptance": 0.7297
     },
     {
       "cluster_name": "Commuter residential",
       "band": "evening",
-      "a": 1.0135,
+      "a": 1.0133,
       "beta": 3.6991,
       "target_acceptance": 0.7297
     },
     {
       "cluster_name": "Commuter residential",
       "band": "midday",
-      "a": 1.0517,
+      "a": 1.051,
       "beta": 3.144,
       "target_acceptance": 0.7297
     },
     {
       "cluster_name": "Commuter residential",
       "band": "night",
-      "a": 1.0728,
+      "a": 1.0746,
       "beta": 4.8346,
       "target_acceptance": 0.6797
     },
     {
       "cluster_name": "Commuter residential",
       "band": "pm_peak",
-      "a": 1.0755,
+      "a": 1.0707,
       "beta": 3.0538,
       "target_acceptance": 0.7297
     },
     {
       "cluster_name": "Core",
       "band": "am_peak",
-      "a": 0.9772,
+      "a": 0.9738,
       "beta": 4.2372,
       "target_acceptance": 0.7475
     },
@@ -454,56 +454,56 @@
     {
       "cluster_name": "Core",
       "band": "midday",
-      "a": 0.9973,
+      "a": 0.9983,
       "beta": 3.3377,
       "target_acceptance": 0.7475
     },
     {
       "cluster_name": "Core",
       "band": "night",
-      "a": 0.9757,
+      "a": 0.975,
       "beta": 4.3648,
       "target_acceptance": 0.6975
     },
     {
       "cluster_name": "Core",
       "band": "pm_peak",
-      "a": 1.0213,
+      "a": 1.0202,
       "beta": 3.488,
       "target_acceptance": 0.7475
     },
     {
       "cluster_name": "Long waits",
       "band": "am_peak",
-      "a": 0.8378,
+      "a": 0.7736,
       "beta": 4.0835,
       "target_acceptance": 0.6533
     },
     {
       "cluster_name": "Long waits",
       "band": "evening",
-      "a": 0.7894,
+      "a": 0.7395,
       "beta": 4.0273,
       "target_acceptance": 0.6533
     },
     {
       "cluster_name": "Long waits",
       "band": "midday",
-      "a": 0.7397,
+      "a": 0.7296,
       "beta": 3.2884,
       "target_acceptance": 0.6533
     },
     {
       "cluster_name": "Long waits",
       "band": "night",
-      "a": 0.841,
+      "a": 0.8924,
       "beta": 4.6897,
       "target_acceptance": 0.6033
     },
     {
       "cluster_name": "Long waits",
       "band": "pm_peak",
-      "a": 0.7391,
+      "a": 0.7363,
       "beta": 4.1754,
       "target_acceptance": 0.6533
     }

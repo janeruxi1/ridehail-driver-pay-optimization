@@ -2,7 +2,7 @@
   "source": "real",
   "regions": 12,
   "weeks": 4,
-  "expected_effect": 0.21591000000000093,
+  "expected_effect": 0.2237700000000018,
   "design": [
     {
       "block_h": 1,
@@ -20,7 +20,7 @@
       "aa_false_positive_cluster_se": 0.05333,
       "bias_share": -0.16557,
       "mde_4wk": 0.19196,
-      "weeks_for_expected": 4
+      "weeks_for_expected": 3
     },
     {
       "block_h": 2,
@@ -38,7 +38,7 @@
       "aa_false_positive_cluster_se": 0.17333,
       "bias_share": 0.02338,
       "mde_4wk": 0.24203,
-      "weeks_for_expected": 6
+      "weeks_for_expected": 5
     }
   ],
   "chosen": {

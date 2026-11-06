@@ -72,7 +72,7 @@ def sources(nb: dict) -> list[tuple[str, str]]:
     return [(c["cell_type"], "".join(c["source"]).rstrip()) for c in nb["cells"]]
 
 
-def build(name: str, execute: bool) -> str:
+def build(name: str, execute: bool, timeout: int = 1800) -> str:
     src = NOTEBOOKS / f"{name}.py"
     dst = NOTEBOOKS / f"{name}.ipynb"
     fresh = to_notebook(parse_percent(src.read_text(encoding="utf-8")))
@@ -88,7 +88,7 @@ def build(name: str, execute: bool) -> str:
     from nbclient import NotebookClient
 
     nb = nbformat.reads(json.dumps(fresh), as_version=4)
-    NotebookClient(nb, timeout=1800, kernel_name="python3",
+    NotebookClient(nb, timeout=None if timeout <= 0 else timeout, kernel_name="python3",
                    resources={"metadata": {"path": str(NOTEBOOKS)}}).execute()
     for cell in nb.cells:  # drop timestamps so re-running does not create noise in git
         cell.metadata.pop("execution", None)
@@ -117,6 +117,7 @@ def main(argv=None) -> int:
     ap.add_argument("names", nargs="*", help="notebook names without extension (default: all)")
     ap.add_argument("--execute", action="store_true")
     ap.add_argument("--check", action="store_true")
+    ap.add_argument("--timeout", type=int, default=1800, help="seconds per cell; 0 for no limit")
     args = ap.parse_args(argv)
     if args.check:
         problems = check()
@@ -137,7 +138,7 @@ def main(argv=None) -> int:
             asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     names = args.names or [p.stem for p in sorted(NOTEBOOKS.glob("[0-9]*.py"))]
     for name in names:
-        print(f"{name}: {build(name, args.execute)}", flush=True)
+        print(f"{name}: {build(name, args.execute, args.timeout)}", flush=True)
     return 0
 
 

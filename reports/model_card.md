@@ -33,11 +33,16 @@ quintile, predicted first-offer acceptance, completion probability and expected 
 ## Evaluation
 
 - Held out (April–June 2025 trips, scored against the planted truth): margin per request +3.7% vs
-  today's pay, with all guardrails met; the non-robust policy violated the wait guardrail in 90% of
-  the 20 posterior draws the robust policy is constrained to satisfy, and on the held-out months too.
-- Dispatch simulation on two real days of Brooklyn requests: first-offer acceptance +1.3 points,
-  margin −$0.04 per request in Brooklyn, where the policy deliberately spends margin to buy service;
-  the change in p90 wait (−0.27 min, 95% interval −0.60 to +0.06) is within simulation noise
+  today's pay, with the acceptance and earnings guardrails met. Rider wait is at or below today in 18 of
+  20 segments and about 1 second per trip worse in two airport segments, where the acceptance model
+  overstates drivers' response to pay. The non-robust policy violated the wait guardrail in 95% of
+  the 20 posterior draws the robust policy is constrained to satisfy.
+- Off-policy check from the randomized pay test alone: first-offer acceptance +3.7 points (95% interval
+  +0.9 to +6.5) against a truth of +3.3, on the 45% of changed trips the test can judge
+  (`reports/metrics/06b_policy_checks.json`).
+- Dispatch simulation on two real days of Brooklyn requests: first-offer acceptance +1.4 points,
+  margin −$0.06 per request in Brooklyn, where the policy deliberately spends margin to buy service;
+  the change in p90 wait (−0.38 min, 95% interval −0.76 to +0.00) is within simulation noise
   (`reports/metrics/06_policy_simulation.json`).
 - Quote latency: about 1 ms per quote in-process (p95 under 1.5 ms on a laptop CPU).
 
@@ -58,7 +63,10 @@ quintile, predicted first-offer acceptance, completion probability and expected 
   behaviour (waiting for premiums) are not modelled; the switchback test (phase 8) is designed to
   catch them.
 - Floor rates are the per-trip version of a standard that is enforced on weekly earnings.
-- Premiums above 15% are outside the range of the randomized test: extrapolation.
+- Premiums above 15% are outside the range of the randomized test: extrapolation, and a third of the
+  policy's pay changes cannot be checked offline for that reason.
+- Robust over posterior draws covers the model's uncertainty, not a bias shared by every draw: the airport
+  segments, with the fewest trips, are where the held-out wait slipped.
 
 ## Monitoring (if deployed)
 

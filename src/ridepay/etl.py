@@ -4,6 +4,8 @@ Kept as small pure functions over DataFrames so each step is unit-tested on a ti
 """
 from __future__ import annotations
 
+from pathlib import Path
+
 from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql import functions as F
 
@@ -20,7 +22,20 @@ def spark_session(app: str = "ridepay", memory: str = "4g") -> SparkSession:
             .config("spark.driver.memory", memory)
             .config("spark.sql.session.timeZone", "UTC")   # TLC times are local NYC wall-clock; never shift them
             .config("spark.sql.shuffle.partitions", "8")
+            .config("spark.sql.execution.arrow.pyspark.enabled", "true")
             .getOrCreate())
+
+
+def write_table(df: DataFrame, folder: Path) -> int:
+    """Write a small aggregated table as ``folder/part-0.parquet`` through pandas.
+
+    The outputs are aggregates or a 0.5% sample, so collecting them is cheap, and this avoids Spark's
+    Hadoop file writer, which needs extra native binaries on Windows. Same layout as the synthetic data.
+    """
+    pdf = df.toPandas()
+    folder.mkdir(parents=True, exist_ok=True)
+    pdf.to_parquet(folder / "part-0.parquet", index=False)
+    return len(pdf)
 
 
 def standardize(df: DataFrame, extra: tuple[str, ...] = ()) -> DataFrame:

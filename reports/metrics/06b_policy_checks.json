@@ -1,0 +1,69 @@
+{
+  "source": "real",
+  "added": "2026-11-06, after the results above; see PROJECT_PLAN.md",
+  "frontier": [
+    {
+      "min_share": 0.0,
+      "draws_with_all_guardrails": 0.0,
+      "margin_vs_today_pct": 27.04688741599628,
+      "held_out_all_guardrails": false,
+      "C3_wait": false,
+      "C4_acceptance": false,
+      "C5_earnings": false
+    },
+    {
+      "min_share": 0.5,
+      "draws_with_all_guardrails": 0.5,
+      "margin_vs_today_pct": 4.303790455297629,
+      "held_out_all_guardrails": false,
+      "C3_wait": false,
+      "C4_acceptance": true,
+      "C5_earnings": true
+    },
+    {
+      "min_share": 0.8,
+      "draws_with_all_guardrails": 0.8,
+      "margin_vs_today_pct": 4.083234961525517,
+      "held_out_all_guardrails": true,
+      "C3_wait": true,
+      "C4_acceptance": true,
+      "C5_earnings": true
+    },
+    {
+      "min_share": 0.95,
+      "draws_with_all_guardrails": 0.95,
+      "margin_vs_today_pct": 3.7265610639725333,
+      "held_out_all_guardrails": false,
+      "C3_wait": false,
+      "C4_acceptance": true,
+      "C5_earnings": true
+    },
+    {
+      "min_share": 1.0,
+      "draws_with_all_guardrails": 1.0,
+      "margin_vs_today_pct": 3.7251007824712135,
+      "held_out_all_guardrails": false,
+      "C3_wait": false,
+      "C4_acceptance": true,
+      "C5_earnings": true
+    }
+  ],
+  "ope": {
+    "bandwidth": 0.02,
+    "test_share": 0.08,
+    "test_range": 0.15,
+    "test_trips": 24258,
+    "share_supported": 0.32996696151213606,
+    "share_changed": 0.7116832517243195,
+    "share_of_changes_supported": 0.45201413035436855,
+    "share_of_changes_beyond_range": 0.3353231116371976,
+    "acceptance_change_ope": 0.03710340748219365,
+    "acceptance_change_ope_ci": [
+      0.00886289778487577,
+      0.06476365134749615
+    ],
+    "acceptance_change_truth": 0.03250809423809131,
+    "acceptance_change_model": 0.03434658524267076,
+    "truth_inside_ci": true
+  }
+}

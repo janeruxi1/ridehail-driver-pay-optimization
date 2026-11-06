@@ -20,7 +20,7 @@
       "min_data_in_leaf": 200,
       "trees": 92,
       "valid_wmape": 0.12573684257820236,
-      "seconds": 13
+      "seconds": 40
     },
     {
       "num_leaves": 127,
@@ -28,7 +28,7 @@
       "min_data_in_leaf": 200,
       "trees": 81,
       "valid_wmape": 0.130890400914247,
-      "seconds": 16
+      "seconds": 55
     },
     {
       "num_leaves": 63,
@@ -36,7 +36,7 @@
       "min_data_in_leaf": 500,
       "trees": 177,
       "valid_wmape": 0.12772859561185917,
-      "seconds": 24
+      "seconds": 68
     },
     {
       "num_leaves": 255,
@@ -44,7 +44,7 @@
       "min_data_in_leaf": 500,
       "trees": 169,
       "valid_wmape": 0.13032019953790144,
-      "seconds": 36
+      "seconds": 101
     }
   ],
   "wmape_levels": {
@@ -68,7 +68,7 @@
     }
   },
   "bias": {
-    "LightGBM": 0.003498687161857231,
+    "LightGBM": 0.0034986871618572003,
     "Seasonal naive (last week)": 0.0003629415730269649,
     "4-week mean": 0.008598713305988676
   },

@@ -65,3 +65,19 @@ Each phase ends with an executed notebook (ending in a verdict), a JSON record o
   LightGBM also see rows in order, so reruns could differ slightly. Every query whose order matters now
   sorts its result, two runs produce identical records, and every notebook was re-run on the real data
   after the change.
+- **2026-11-06: two checks added after the results** (recorded separately in `06b_policy_checks.json`):
+  - *The price of safety.* A chance-constrained version of the optimizer (`policy.optimize_chance`)
+    demands the guardrails in at least 0%, 50%, 80%, 95% or 100% of the posterior draws; each policy is
+    scored on the held-out months against the truth. The robust policy is the 100% end of that curve.
+  - *Off-policy evaluation.* The pay test is continued, in simulation, into the held-out months, and the
+    robust policy's change in first-offer acceptance is estimated from those test trips alone with
+    kernel-weighted inverse propensity scoring (`ridepay.ope`), then checked against the truth. The
+    estimator can only judge changes inside the test's ±15% range; that share is reported.
+- **2026-11-06: tables rebuilt and every notebook re-run.** The processed tables had to be rebuilt from the
+  TLC files with newer library versions, and Spark's file writer was replaced by pandas for the small
+  outputs (it needs extra native files on Windows). The rebuilt trip sample differs, so results moved a
+  little (robust margin +3.7% as before; ROC AUC 0.735 → 0.739; randomized test 5.6 → 5.0 points per
+  10% pay, still covering the truth of 5.6). One result changed in kind: scored against the truth, the
+  robust policy's rider wait now slips in two airport segments (about 1 second per trip), where the
+  pay model overstates drivers' response. It is reported as found, with a per-segment table in
+  notebook 06 and `held_wait_slips` in the record; the documents were updated to match.

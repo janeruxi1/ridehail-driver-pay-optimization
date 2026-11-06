@@ -23,11 +23,11 @@
     }
   },
   "floor": {
-    "median_ratio": 1.0034945887506987,
-    "at_floor_pct": 53.162540401760374,
-    "below_floor_pct": 4.896125585427393,
-    "above_cap_pct": 13.410254776893654,
-    "premium_share_of_pay_pct": 7.881013465810817
+    "median_ratio": 1.003496549759554,
+    "at_floor_pct": 53.13150131967086,
+    "below_floor_pct": 4.893151019140772,
+    "above_cap_pct": 13.429314436533812,
+    "premium_share_of_pay_pct": 7.8917137357055385
   },
   "health_month": [
     {
@@ -230,7 +230,7 @@
     }
   ],
   "weekly": {
-    "corr_trips_wait": -0.1454404264738461,
+    "corr_trips_wait": -0.14544042647384628,
     "peak_wait_min": 6.103204685601304,
     "peak_wait_dow": 6,
     "peak_wait_hod": 4,
